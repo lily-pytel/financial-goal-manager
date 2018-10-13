@@ -1,10 +1,15 @@
-import { ADD_GOAL, ADD_PROGRESS, DELETE_GOAL, DELETE_PROGRESS } from './GoalActions'
+import { LOAD_GOALS, ADD_GOAL, ADD_PROGRESS, DELETE_GOAL, DELETE_PROGRESS } from './GoalsActions'
 
 // Initial State
 const initialState = { data: [] }
 
 const GoalReducer = (state = initialState, action) => {
   switch (action.type) {
+    case LOAD_GOALS :
+      return {
+        data: action.goals
+      }
+
     case ADD_GOAL :
       return {
         data: [action.goal, ...state.data]

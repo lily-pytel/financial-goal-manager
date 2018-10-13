@@ -1,6 +1,7 @@
 import callApi from '../../util/apiCaller'
 
 // Export Constants
+export const LOAD_GOALS = 'LOAD_GOALS'
 export const ADD_GOAL = 'ADD_GOAL'
 export const ADD_PROGRESS = 'ADD_PROGRESS'
 export const DELETE_GOAL = 'DELETE_GOAL'
@@ -11,6 +12,21 @@ export function addGoal (goal) {
   return {
     type: ADD_GOAL,
     goal
+  }
+}
+
+export function loadGoals (goals) {
+  return {
+    type: LOAD_GOALS,
+    goals
+  }
+}
+
+export function fetchGoals () {
+  return (dispatch) => {
+    return callApi('goals').then(res => {
+      dispatch(loadGoals(res.goals))
+    })
   }
 }
 
