@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router'
 
 function Goals (props) {
   return (
@@ -16,7 +17,7 @@ function Goals (props) {
         <tbody>
           {props.goals.map(goal =>
             <tr key={goal._id}>
-              <th scope='row'>{goal.name}</th>
+              <th scope='row'><Link to={`/details/${goal._id}`} >{goal.name}</Link></th>
               <td>{goal.description}</td>
               <td>{goal.years.length}</td>
               <td>{goal.progress.length}</td>

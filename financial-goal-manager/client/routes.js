@@ -31,10 +31,10 @@ export default (
       }}
     />
     <Route
-      path='/home'
+      path='/details/:id'
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
-          cb(null, require('./modules/Goal/pages/GoalsPage').default)
+          cb(null, require('./modules/Goal/pages/GoalDetailsPage').default)
         })
       }}
     />
