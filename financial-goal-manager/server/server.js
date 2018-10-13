@@ -16,7 +16,7 @@ import Helmet from 'react-helmet'
 // Import required modules
 import routes from '../client/routes'
 import { fetchComponentData } from './util/fetchData'
-import goals from './routes/goals.routes'
+import goals from './routes/goal.routes'
 import dummyData from './dummyData'
 import serverConfig from './config'
 

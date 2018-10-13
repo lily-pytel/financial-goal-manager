@@ -66,7 +66,7 @@ export function getGoal (req, res) {
  * @param res
  * @returns void
  */
-export function deletePost (req, res) {
+export function deleteGoal (req, res) {
   Goal.findOne({ cuid: req.params.cuid }).exec((err, goal) => {
     if (err) {
       res.status(500).send(err)
@@ -84,14 +84,15 @@ export function addProgress (req, res) {
       res.status(500).send(err)
     }
 
-    goal.progress.push(req.progress)
+    const { progress } = req
 
+    goal.progress.push(progress)
     goal.save((err, saved) => {
       if (err) {
         res.status(500).send(err)
       }
 
-      res.json({ req.progress })
+      res.json({ progress })
     })
   })
 }
@@ -102,14 +103,15 @@ export function deleteProgress (req, res) {
       res.status(500).send(err)
     }
 
-    goal.progress = goal.progress.filter(entry => entry.date !== req.progress.date && entry.value !== req.progress.value)
+    const { progress } = req
 
+    goal.progress = goal.progress.filter(entry => entry.date !== progress.date && entry.value !== progress.value)
     goal.save((err, saved) => {
       if (err) {
         res.status(500).send(err)
       }
-      
-      res.json({ req.progress })
+
+      res.json({ progress })
     })
   })
 }
