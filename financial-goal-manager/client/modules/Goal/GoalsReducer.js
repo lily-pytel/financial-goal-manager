@@ -49,7 +49,7 @@ const GoalReducer = (state = initialState, action) => {
 export const getGoals = state => state.goals.data
 
 // Get goal by cuid
-export const getGoal = (state, cuid) => state.goals.data.filter(goal => goal.cuid === cuid)[0]
+export const getGoal = (state, id) => state.goals.data.filter(goal => goal._id === id)[0]
 
 // Export Reducer
 export default GoalReducer
