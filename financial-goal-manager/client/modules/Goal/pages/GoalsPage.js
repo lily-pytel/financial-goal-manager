@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 // Import Components
 import Goals from '../components/Goals'
+import GoalsChart from '../components/GoalsChart'
 
 // Import Selectors
 import { fetchGoals } from '../GoalsActions'

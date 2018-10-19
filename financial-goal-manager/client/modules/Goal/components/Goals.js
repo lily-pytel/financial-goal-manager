@@ -1,29 +1,85 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router'
+import ReactHighcharts from 'react-highcharts'
+import GoalsHeader from './GoalsHeader'
+import GoalsFooter from './GoalsFooter'
+import GoalsBody from './GoalsBody'
+
+const config = {
+  chart: {
+    type: 'column'
+  },
+  title: {
+    text: 'All My Goals'
+  },
+  xAxis: {
+    crosshair: true,
+    title: {
+      text: 'Year'
+    }
+  },
+  yAxis: {
+    min: 0,
+    title: {
+      text: 'Amount'
+    }
+  }
+}
 
 function Goals (props) {
+  const { goals } = props
+  const yearsObjects = goals.map(goal => goal.years)
+  const yearsArray = [].concat.apply([], yearsObjects)
+  const years = [...new Set(yearsArray.map(year => year[0].year))]
+    .sort((a, b) => a - b)
+
+  const firstYear = years && years.length && years[0]
+  const lastYear = years && years.length && years[years.length - 1]
+
+  const goalAmounts = years.map(year => {
+    const allGoals = goals
+      .map(g => g.years)
+      .map(g => g.map(i => i[0]))
+      .map(g => {
+        const goalPerYear = g.find(y => y.year === year)
+        return (goalPerYear && goalPerYear.value) || 0
+      })
+    const totalGoal = allGoals
+      .reduce((acc, current) => acc + current, 0)
+
+    return totalGoal
+  })
+
+  const goalProgress = years.map(year => {
+    const totalProgress = goals
+      .map(g => g.progress)
+      .map(g => {
+        const goalsPerYear = g.find(y => new Date(y[0].date).getFullYear() === year)
+        const totalAmount = goalsPerYear.reduce((acc, current) => {
+          const currVal = (current && current.value) || 0
+          return acc + currVal
+        }, 0)
+        return totalAmount
+      })
+      .reduce((acc, current) => acc + current, 0)
+
+    return totalProgress
+  })
+
+  config.subtitle = { text: `from ${firstYear} to ${lastYear}` }
+  config.xAxis = { ...config.xAxis, categories: years }
+  config.series = [
+    { name: 'Goal', color: '#419CA7', data: goalAmounts },
+    { name: 'Progress', color: '#8BA251', data: goalProgress }
+  ]
+
   return (
     <div>
+      <ReactHighcharts config={config} />
       <table className='table table-striped'>
-        <thead>
-          <tr>
-            <th scope='col'>Name</th>
-            <th scope='col'>Description</th>
-            <th scope='col'>Years</th>
-            <th scope='col'>Progress</th>
-          </tr>
-        </thead>
-        <tbody>
-          {props.goals.map(goal =>
-            <tr key={goal._id}>
-              <th scope='row'><Link to={`/details/${goal._id}`} >{goal.name}</Link></th>
-              <td>{goal.description}</td>
-              <td>{goal.years.length}</td>
-              <td>{goal.progress.length}</td>
-            </tr>
-          )}
-        </tbody>
+        <GoalsHeader years={years} />
+        <GoalsBody years={years} goals={goals} />
+        <GoalsFooter years={years} goalAmounts={goalAmounts} goalProgress={goalProgress} />
       </table>
     </div>
   )
