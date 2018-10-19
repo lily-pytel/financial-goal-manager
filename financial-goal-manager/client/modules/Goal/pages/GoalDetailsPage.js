@@ -48,7 +48,7 @@ class GoalDetailsPage extends Component {
 
     return (
       <div>
-        <div className='jumbotron jumbotron-fluid jumbotron-sm'>
+        <div className='jumbotron jumbotron-fluid jumbotron-sm' style={{ padding: '1em' }}>
           <div className='container'>
             <h1 className='display-4'>{goal.name}</h1>
             <p className='lead'>{goal.description}</p>
