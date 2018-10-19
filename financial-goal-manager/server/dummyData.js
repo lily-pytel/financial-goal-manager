@@ -67,7 +67,8 @@ export default function () {
           { year: 2021, value: 9000 }
         ],
         progress: [
-          { date: '2019-12-31', value: 3000 },
+          { date: '2019-05-05', value: 1500 },
+          { date: '2019-12-31', value: 1500 },
           { date: '2020-12-31', value: 6000 },
           { date: '2021-12-31', value: 9200 }
         ]
