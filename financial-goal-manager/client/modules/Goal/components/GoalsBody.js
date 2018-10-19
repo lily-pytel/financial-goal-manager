@@ -21,8 +21,8 @@ function GoalsBody (props) {
               const totalProgress = yearProgress.reduce((acc, current) => acc + current[0].value, 0)
 
               return [
-                <td>{yearGoal && yearGoal[0] && yearGoal[0].value}</td>,
-                <td>{totalProgress}</td>
+                <td key={`inner${year}goal`}>{yearGoal && yearGoal[0] && yearGoal[0].value}</td>,
+                <td key={`inner${year}progress`}>{totalProgress}</td>
               ]
             })}
           </tr>
