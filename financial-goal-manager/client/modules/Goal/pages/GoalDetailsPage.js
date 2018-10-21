@@ -81,14 +81,14 @@ function mapStateToProps (state, existingProps) {
 }
 
 GoalDetailsPage.propTypes = {
-  goal: PropTypes.arrayOf(PropTypes.shape({
+  goal: PropTypes.shape({
     name: PropTypes.string.isRequired,
     type: PropTypes.string,
     description: PropTypes.string,
     years: PropTypes.array.isRequired,
     progress: PropTypes.array,
     _id: PropTypes.string.isRequired
-  })),
+  }),
   dispatch: PropTypes.func.isRequired
 }
 
