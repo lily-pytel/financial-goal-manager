@@ -17,12 +17,16 @@ function GoalsHeader (props) {
   return (
     <thead>
       <tr>
-        <th /><th />{headerYear}
+        <th />
+        <th />
+        {headerYear}
+        <th />
       </tr>
       <tr>
         <th scope='col'>Name</th>
         <th scope='col'>Description</th>
         {headerYearSecondary}
+        <th />
       </tr>
     </thead>
   )

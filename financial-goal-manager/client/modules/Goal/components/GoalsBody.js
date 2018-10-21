@@ -1,9 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
+import { deleteGoalequest } from 'modules/Goal/GoalsActions'
+
 function GoalsBody (props) {
-  const { years, goals } = props
+  const { years, goals, dispatch } = props
 
   return (
     <tbody>
@@ -25,6 +28,11 @@ function GoalsBody (props) {
                 <td key={`inner${year}progress`}>{totalProgress}</td>
               ]
             })}
+            <td>
+              <button className='btn btn-link'>E</button>
+              &nbsp;|&nbsp;
+              <button className='btn btn-link' onClick={() => dispatch(deleteGoalequest(goal._id))}>D</button>
+            </td>
           </tr>
         )
       }
@@ -42,7 +50,13 @@ GoalsBody.propTypes = {
     years: PropTypes.array.isRequired,
     progress: PropTypes.array,
     _id: PropTypes.string.isRequired
-  }))
+  })),
+  dispatch: PropTypes.func.isRequired
 }
 
-export default GoalsBody
+// Retrieve data from store as props
+function mapStateToProps (state) {
+  return {}
+}
+
+export default connect(mapStateToProps)(GoalsBody)

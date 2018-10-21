@@ -16,6 +16,7 @@ function GoalsFooter (props) {
         <th scope='row'>Total</th>
         <th />
         {totalRow}
+        <th />
       </tr>
     </tfoot>
   )

@@ -3,12 +3,11 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 // Import Components
-import Goals from '../components/Goals'
-import GoalsChart from '../components/GoalsChart'
+import Goals from 'modules/Goal/components/Goals'
 
 // Import Selectors
-import { fetchGoals } from '../GoalsActions'
-import { getGoals } from '../GoalsReducer'
+import { fetchGoals } from 'Goal/GoalsActions'
+import { getGoals } from 'Goal/GoalsReducer'
 
 class GoalsPage extends Component {
   componentDidMount () {

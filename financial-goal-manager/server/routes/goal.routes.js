@@ -15,7 +15,7 @@ router.route('/goals/add').post(GoalController.addGoal)
 router.route('goals/add/progress/:cuid').post(GoalController.addProgress)
 
 // Delete a goal by cuid
-router.route('/goals/:cuid').delete(GoalController.deleteGoal)
+router.route('/goals/delete/:cuid').delete(GoalController.deleteGoal)
 
 // Delete progress from a Goal
 router.route('goals/progress/:cuid').post(GoalController.deleteProgress)

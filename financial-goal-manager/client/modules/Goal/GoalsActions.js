@@ -61,7 +61,7 @@ export function deleteGoal (cuid) {
 
 export function deleteGoalequest (cuid) {
   return (dispatch) => {
-    return callApi(`goals/delete/${cuid}`).then(() => dispatch(deleteGoal(cuid)))
+    return callApi(`goals/delete/${cuid}`, 'delete').then(() => dispatch(deleteGoal(cuid)))
   }
 }
 
