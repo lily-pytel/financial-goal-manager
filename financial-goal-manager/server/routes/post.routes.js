@@ -1,4 +1,4 @@
-import { Router } from 'express'
+nimport { Router } from 'express'
 import * as PostController from '../controllers/post.controller'
 const router = new Router()
 
