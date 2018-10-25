@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
-import { deleteGoalequest } from 'modules/Goal/GoalsActions'
+import { deleteGoalequest } from '../GoalsActions'
 
 function GoalsBody (props) {
   const { years, goals, dispatch } = props

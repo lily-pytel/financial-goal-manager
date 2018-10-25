@@ -3,18 +3,29 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 // Import Components
-import Goals from 'modules/Goal/components/Goals'
+import Goals from '../components/Goals'
+import NewGoal from '../components/NewGoal'
+import TutorAdvice from '../../Tutor/components/TutorAdvice'
 
 // Import Selectors
-import { fetchGoals } from 'Goal/GoalsActions'
-import { getGoals } from 'Goal/GoalsReducer'
+import { fetchGoals } from '../GoalsActions'
+import { getGoals } from '../GoalsReducer'
 
 class GoalsPage extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      goalModalOpen: false,
+      tutorModalOpen: false
+    }
+  }
+
   componentDidMount () {
     this.props.dispatch(fetchGoals())
   }
 
   render () {
+    const { goalModalOpen, tutorModalOpen } = this.state
     const { goals } = this.props
 
     if (!goals) {
@@ -26,6 +37,43 @@ class GoalsPage extends Component {
     return (
       <div>
         <Goals goals={this.props.goals} />
+        <div className='container'>
+          <div className='row'>
+            <div className='col'>
+              <button
+                className='btn btn-primary btn-sm'
+                onClick={(click) => {
+                  this.setState({ goalModalOpen: !goalModalOpen })
+                }}
+              >
+                Create a goal
+              </button>
+              <br />
+              <button
+                className='btn btn-link'
+                onClick={(click) => {
+                  this.setState({ tutorModalOpen: !tutorModalOpen })
+                }}
+              >
+                Help me choose a goal
+              </button>
+            </div>
+          </div>
+        </div>
+        <NewGoal
+          modalOpen={goalModalOpen}
+          onSubmit={() => {}}
+          onCancel={() => {
+            this.setState({ goalModalOpen: false })
+          }}
+        />
+        <TutorAdvice
+          modalOpen={tutorModalOpen}
+          onSubmit={() => {}}
+          onCancel={() => {
+            this.setState({ tutorModalOpen: false })
+          }}
+        />
       </div>
     )
   }
