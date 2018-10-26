@@ -1,19 +1,77 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import Select from 'react-select';
 
 class NewGoal extends Component {
+  constructor (props) {
+    super(props)
+
+    const currentYear = new Date().getFullYear()
+    this.state = {
+      selectedOption: null,
+      selectedType: null,
+      years: [{
+        id: currentYear,
+        value: ''
+      }, {
+        id: currentYear + 1,
+        value: ''
+      }, {
+        id: currentYear + 2,
+        value: ''
+      }
+    ]}
+  }
+
+  componentWillMount() {
+    this.renderOptionsDropdown = this.renderOptionsDropdown.bind(this)
+    this.renderRadio = this.renderRadio.bind(this)
+  }
+
   renderOptionsDropdown () {
+    var options = [
+      { value: 'emergency', label: 'Save for emergency' },
+      { value: 'salary', label: 'Save part of salary' },
+      { value: 'retirement', label: 'Save for retirement' },
+      { value: 'debt', label: 'Pay off debt' }
+    ]
+
     return (
-      <div className='dropdown-menu dropdown-menu-right'>
-        <button className='dropdown-item' type='button'>Save for emergency</button>
-        <button className='dropdown-item' type='button'>Save part of salary</button>
-        <button className='dropdown-item' type='button'>Create my own goal</button>
+      <div className='form-group'>
+        <h5>Goal Name</h5>
+        <Select
+          style={{ width: '100%' }}
+          value={this.state.selectedOption}
+          onChange={(selectedOption) => {
+            this.setState({ selectedOption })
+          }}
+          options={options}
+        />
+      </div>
+    )
+  }
+
+  renderRadio () {
+    const { selectedType } = this.state
+    const onChange = (event) => {
+      const value = event.target.value
+      this.setState({ selectedType: value })
+    }
+
+    return (
+      <div className='form-group'>
+        <label htmlFor='placeholder'>
+          <h5>Goal Type</h5>
+          <input type='radio' checked={selectedType === 'savings'} value='savings' onChange={onChange}/> Savings<br />
+          <input type='radio' checked={selectedType === 'debt'} value='debt' onChange={onChange}/> Debt Reduction<br />
+        </label>
       </div>
     )
   }
 
   render () {
+    const { years } = this.state
     const { modalOpen } = this.props
 
     return (
@@ -21,60 +79,84 @@ class NewGoal extends Component {
         <div className='modal-dialog' role='document'>
           <div className='modal-content'>
             <div className='modal-header'>
-              <h5 className='modal-title'>Create a Goal</h5>
+              <h4 className='modal-title'>Create a Goal</h4>
               <button type='button' className='close' aria-label='Close' onClick={this.props.onCancel}>
                 <span aria-hidden='true'>&times;</span>
               </button>
             </div>
             <div className='modal-body'>
-              <div className='form-group'>
-                <div className='btn-group'>
-                  <label>
-                    <h6>Goal Name</h6>
-                    <button type='button' className='btn btn btn-outline-secondary dropdown-toggle btn-sm' data-toggle='dropdown'>
-                      Select Goal Name
-                    </button>
-                    {this.renderOptionsDropdown()}
-                  </label>
-                </div>
-              </div>
+              {this.renderOptionsDropdown()}
+              <hr />
+              {this.renderRadio()}
               <hr />
               <div className='form-group'>
                 <label htmlFor='placeholder'>
-                  <h6>Goal Type</h6>
-                  <input type='radio' name='gender' value='male' /> Savings<br />
-                  <input type='radio' name='gender' value='female' /> Debt Reduction<br />
-                </label>
-              </div>
-              <hr />
-              <div className='form-group'>
-                <label htmlFor='placeholder'>
-                  <h6>Goal Years</h6>
+                  <h5>Goal Years</h5>
                   <table className='table table-bordered'>
                     <thead>
                       <tr>
                         <th scope='col'>Year</th>
                         <th scope='col'>Amount</th>
+                        <th />
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope='row'>2018</th>
-                        <td><input type='text' name='' className='input-sm' /></td>
-                      </tr>
-                      <tr>
-                        <th scope='row'>2019</th>
-                        <td><input type='text' name='' className='input-sm' /></td>
-                      </tr>
-                      <tr>
-                        <th scope='row'>2020</th>
-                        <td><input type='text' name='' className='input-sm' /></td>
-                      </tr>
+                      {years.map(y => <tr key={y.id}>
+                        <th scope='row'>{y.id}</th>
+                        <td>
+                          <input
+                            type='text'
+                            className='input-sm'
+                            value={y.value}
+                            onChange={(event) => {
+                              const value = event.target.value
+                              const newYears = [...years]
+                              const currYear = newYears.find(ny => ny.id === y.id)
+
+                              if (currYear) {
+                                currYear.value = value
+                                this.setState({ years: newYears })
+                              }
+                            }}
+                          />
+                        </td>
+                        <td>
+                          <button
+                            className='btn btn-sm btn-link'
+                            style={{ padding: '0px' }}
+                            onClick={() => {
+                              const newYears = years.filter(ny => ny.id !== y.id)
+                              this.setState({ years: newYears })
+                            }}
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>)}
                     </tbody>
                   </table>
                 </label>
               </div>
-              <div className='form-group'><button type='' className='btn btn-outline-secondary btn-sm'>Add Year</button></div>
+              <div className='form-group'>
+                <button
+                  type='button'
+                  className='btn btn-outline-secondary btn-sm'
+                  onClick={() => {
+                    const lastYear = years && years.length
+                      ? years[years.length - 1].id
+                      : new Date().getFullYear()
+                    const newYears = [...years]
+                    newYears.push({
+                      id: lastYear + 1,
+                      amount: ''
+                    })
+
+                    this.setState({ years: newYears })
+                  }}
+                >
+                  Add Year
+                </button>
+              </div>
             </div>
             <div className='modal-footer'>
               <button type='button' className='btn btn-primary' onClick={this.props.onSubmit}>Submit</button>

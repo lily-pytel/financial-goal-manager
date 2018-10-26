@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 // Import Components
 import Goals from '../components/Goals'
 import NewGoal from '../components/NewGoal'
-import TutorAdvice from '../../Tutor/components/TutorAdvice'
+//import TutorAdvice from '../../Tutor/components/TutorAdvice'
 
 // Import Selectors
 import { fetchGoals } from '../GoalsActions'
@@ -15,7 +15,7 @@ class GoalsPage extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      goalModalOpen: false,
+      goalModalOpen: true,
       tutorModalOpen: false
     }
   }
@@ -37,27 +37,25 @@ class GoalsPage extends Component {
     return (
       <div>
         <Goals goals={this.props.goals} />
-        <div className='container'>
-          <div className='row'>
-            <div className='col'>
-              <button
-                className='btn btn-primary btn-sm'
-                onClick={(click) => {
-                  this.setState({ goalModalOpen: !goalModalOpen })
-                }}
-              >
-                Create a goal
-              </button>
-              <br />
-              <button
-                className='btn btn-link'
-                onClick={(click) => {
-                  this.setState({ tutorModalOpen: !tutorModalOpen })
-                }}
-              >
-                Help me choose a goal
-              </button>
-            </div>
+        <div className='row'>
+          <div className='col'>
+            <button
+              className='btn btn-primary btn-sm'
+              onClick={(click) => {
+                this.setState({ goalModalOpen: !goalModalOpen })
+              }}
+            >
+              Create a goal
+            </button>
+            <br />
+            <button
+              className='btn btn-link'
+              onClick={(click) => {
+                this.setState({ tutorModalOpen: !tutorModalOpen })
+              }}
+            >
+              Help me choose a goal
+            </button>
           </div>
         </div>
         <NewGoal
@@ -65,13 +63,6 @@ class GoalsPage extends Component {
           onSubmit={() => {}}
           onCancel={() => {
             this.setState({ goalModalOpen: false })
-          }}
-        />
-        <TutorAdvice
-          modalOpen={tutorModalOpen}
-          onSubmit={() => {}}
-          onCancel={() => {
-            this.setState({ tutorModalOpen: false })
           }}
         />
       </div>
