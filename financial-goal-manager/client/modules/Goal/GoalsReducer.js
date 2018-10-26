@@ -18,9 +18,21 @@ const GoalReducer = (state = initialState, action) => {
       }
 
     case ADD_PROGRESS :
-      return {
-        data: [...state.data]
+      let newGoalsAddProgress = state.data.filter(goal => goal._id !== action.cuid)
+      const goalToAdd = state.data.find(goal => goal._id === action.cuid)
+
+      if (goalToAdd) {
+        goalToAdd.progress.push(action.progress)
+
+        newGoalsAddProgress.push(goalToAdd)
+        newGoalsAddProgress = newGoalsAddProgress.sort((a, b) => a.name.localeCompare(b.name))
+
+        return {
+          data: newGoalsAddProgress
+        }
       }
+
+      return state
 
     case DELETE_GOAL :
       return {
@@ -28,13 +40,14 @@ const GoalReducer = (state = initialState, action) => {
       }
 
     case DELETE_PROGRESS :
-      const goal = state.data.filter(goal => goal._id !== action.cuid)
+      const goalToDelete = state.data.find(goal => goal._id === action.cuid)
 
-      if (goal) {
-        goal.progress.filter(entry => entry.date !== action.date && entry.value !== action.value)
+      if (goalToDelete) {
+        goalToDelete.progress = goalToDelete.progress
+          .filter(entry => entry.date !== action.date && entry.value !== action.value)
 
         return {
-          data: [goal, ...state.data]
+          data: [...state.data]
         }
       }
 

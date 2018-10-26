@@ -48,7 +48,7 @@ export function addProgress (cuid, progress) {
 
 export function addProgressRequest (cuid, progress) {
   return (dispatch) => {
-    return callApi(`goals/add/progress/${cuid}`).then(res => {
+    return callApi(`goals/progress/add/${cuid}`, 'post', { progress }).then(res => {
       dispatch(addProgress(cuid, res.progress))
     })
   }
@@ -77,7 +77,7 @@ export function deleteProgress (cuid, progress) {
 
 export function deleteProgressRequest (cuid, progress) {
   return (dispatch) => {
-    return callApi(`goals/delete/progress/${cuid}`).then(res => {
+    return callApi(`goals/progress/delete/${cuid}`, 'post', { progress }).then(res => {
       dispatch(deleteProgress(cuid, res.progress))
     })
   }

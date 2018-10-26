@@ -79,14 +79,14 @@ export function deleteGoal (req, res) {
 }
 
 export function addProgress (req, res) {
-  Goal.findOne({ _id: req.params.cuid }).exec((err, goal) => {
+  const { params: { cuid }, body: { progress } } = req
+
+  Goal.findOne({ _id: cuid }).exec((err, goal) => {
     if (err) {
       res.status(500).send(err)
     }
 
-    const { progress } = req
-
-    goal.progress.push(progress)
+    goal.progress = goal.progress.concat([progress])
     goal.save((err, saved) => {
       if (err) {
         res.status(500).send(err)
@@ -98,12 +98,12 @@ export function addProgress (req, res) {
 }
 
 export function deleteProgress (req, res) {
-  Goal.findOne({ _id: req.params.cuid }).exec((err, goal) => {
+  const { params: { cuid }, body: { progress } } = req
+
+  Goal.findOne({ _id: cuid }).exec((err, goal) => {
     if (err) {
       res.status(500).send(err)
     }
-
-    const { progress } = req
 
     goal.progress = goal.progress.filter(entry => entry.date !== progress.date && entry.value !== progress.value)
     goal.save((err, saved) => {
