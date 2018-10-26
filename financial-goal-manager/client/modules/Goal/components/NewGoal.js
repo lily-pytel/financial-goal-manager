@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import Select from 'react-select';
+import Select from 'react-select'
+
+import { addGoalRequest } from '../GoalsActions'
 
 class NewGoal extends Component {
   constructor (props) {
@@ -9,6 +11,7 @@ class NewGoal extends Component {
 
     const currentYear = new Date().getFullYear()
     this.state = {
+      customGoal: false,
       selectedOption: null,
       selectedType: null,
       years: [{
@@ -30,6 +33,21 @@ class NewGoal extends Component {
     this.enterYearAmount = this.enterYearAmount.bind(this)
     this.addYear = this.addYear.bind(this)
     this.removeYear = this.removeYear.bind(this)
+    this.saveGoal = this.saveGoal.bind(this)
+  }
+
+  saveGoal () {
+    const { selectedOption, years } = this.state
+    const { dispatch, onCancel } = this.props
+    const goal = {
+      name: selectedOption.label,
+      type: selectedOption.value,
+      description: '',
+      years: years.filter(y => y.year && y.value)
+    }
+
+    dispatch(addGoalRequest(goal))
+    onCancel()
   }
 
   enterYearAmount (event, item) {
@@ -85,12 +103,18 @@ class NewGoal extends Component {
           }}
           options={options}
         />
+        <hr />
       </div>
     )
   }
 
   renderRadio () {
-    const { selectedType } = this.state
+    const { customGoal, selectedType } = this.state
+
+    if (!customGoal) {
+      return null
+    }
+
     const onChange = (event) => {
       const value = event.target.value
       this.setState({ selectedType: value })
@@ -103,13 +127,14 @@ class NewGoal extends Component {
           <input type='radio' checked={selectedType === 'savings'} value='savings' onChange={onChange} /> Savings<br />
           <input type='radio' checked={selectedType === 'debt'} value='debt' onChange={onChange} /> Debt Reduction<br />
         </label>
+        <hr />
       </div>
     )
   }
 
   render () {
-    const { years } = this.state
-    const { modalOpen } = this.props
+    const { years, selectedOption } = this.state
+    const { modalOpen, onCancel } = this.props
 
     return (
       <div className='modal' tabIndex='-1' role='dialog' style={{ display: modalOpen ? 'block' : 'none' }}>
@@ -117,15 +142,13 @@ class NewGoal extends Component {
           <div className='modal-content'>
             <div className='modal-header'>
               <h4 className='modal-title'>Create a Goal</h4>
-              <button type='button' className='close' aria-label='Close' onClick={this.props.onCancel}>
+              <button type='button' className='close' aria-label='Close' onClick={onCancel}>
                 <span aria-hidden='true'>&times;</span>
               </button>
             </div>
             <div className='modal-body'>
               {this.renderOptionsDropdown()}
-              <hr />
               {this.renderRadio()}
-              <hr />
               <div className='form-group'>
                 <label htmlFor='placeholder'>
                   <h5>Goal Years</h5>
@@ -173,8 +196,15 @@ class NewGoal extends Component {
               </div>
             </div>
             <div className='modal-footer'>
-              <button type='button' className='btn btn-primary' onClick={this.props.onSubmit}>Submit</button>
-              <button type='button' className='btn btn-secondary' onClick={this.props.onCancel}>Close</button>
+              <button
+                type='button'
+                className='btn btn-primary'
+                onClick={this.saveGoal}
+                disabled={!selectedOption || !years || !years.length}
+              >
+                Submit
+              </button>
+              <button type='button' className='btn btn-secondary' onClick={onCancel}>Close</button>
             </div>
           </div>
         </div>
@@ -185,7 +215,6 @@ class NewGoal extends Component {
 
 NewGoal.propTypes = {
   modalOpen: PropTypes.bool,
-  onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   dispatch: PropTypes.func.isRequired
 }

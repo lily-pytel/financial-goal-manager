@@ -7,12 +7,14 @@ const GoalReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_GOALS :
       return {
-        data: action.goals
+        data: action.goals.sort((a, b) => a.name.localeCompare(b.name))
       }
 
     case ADD_GOAL :
+      const newGoals = [action.goal, ...state.data]
+      let sortedNewGoals = newGoals.sort((a, b) => a.name.localeCompare(b.name))
       return {
-        data: [action.goal, ...state.data]
+        data: sortedNewGoals
       }
 
     case ADD_PROGRESS :
@@ -22,11 +24,11 @@ const GoalReducer = (state = initialState, action) => {
 
     case DELETE_GOAL :
       return {
-        data: state.data.filter(goal => goal.cuid !== action.cuid)
+        data: state.data.filter(goal => goal._id !== action.cuid)
       }
 
     case DELETE_PROGRESS :
-      const goal = state.data.filter(goal => goal.cuid !== action.cuid)
+      const goal = state.data.filter(goal => goal._id !== action.cuid)
 
       if (goal) {
         goal.progress.filter(entry => entry.date !== action.date && entry.value !== action.value)
@@ -48,7 +50,7 @@ const GoalReducer = (state = initialState, action) => {
 // Get all goals
 export const getGoals = state => state.goals.data
 
-// Get goal by cuid
+// Get goal by id
 export const getGoal = (state, id) => state.goals.data.filter(goal => goal._id === id)[0]
 
 // Export Reducer

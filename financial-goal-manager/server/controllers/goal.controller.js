@@ -52,7 +52,7 @@ export function addGoal (req, res) {
  * @returns void
  */
 export function getGoal (req, res) {
-  Goal.findOne({ cuid: req.params.cuid }).exec((err, goal) => {
+  Goal.findOne({ _id: req.params.cuid }).exec((err, goal) => {
     if (err) {
       res.status(500).send(err)
     }
@@ -67,7 +67,7 @@ export function getGoal (req, res) {
  * @returns void
  */
 export function deleteGoal (req, res) {
-  Goal.findOne({ cuid: req.params.cuid }).exec((err, goal) => {
+  Goal.findOne({ _id: req.params.cuid }).exec((err, goal) => {
     if (err) {
       res.status(500).send(err)
     }
@@ -79,7 +79,7 @@ export function deleteGoal (req, res) {
 }
 
 export function addProgress (req, res) {
-  Goal.findOne({ cuid: req.params.cuid }).exec((err, goal) => {
+  Goal.findOne({ _id: req.params.cuid }).exec((err, goal) => {
     if (err) {
       res.status(500).send(err)
     }
@@ -98,7 +98,7 @@ export function addProgress (req, res) {
 }
 
 export function deleteProgress (req, res) {
-  Goal.findOne({ cuid: req.params.cuid }).exec((err, goal) => {
+  Goal.findOne({ _id: req.params.cuid }).exec((err, goal) => {
     if (err) {
       res.status(500).send(err)
     }

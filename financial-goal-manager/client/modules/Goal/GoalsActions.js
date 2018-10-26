@@ -32,7 +32,9 @@ export function fetchGoals () {
 
 export function addGoalRequest (goal) {
   return (dispatch) => {
-    return callApi('goals/add', { goal }).then(res => dispatch(addGoal(res.goal)))
+    return callApi('goals/add', 'post', { goal }).then(res => {
+      dispatch(addGoal(res.goal))
+    })
   }
 }
 
@@ -61,7 +63,7 @@ export function deleteGoal (cuid) {
 
 export function deleteGoalequest (cuid) {
   return (dispatch) => {
-    return callApi(`goals/delete/${cuid}`, 'delete').then(() => dispatch(deleteGoal(cuid)))
+    return callApi(`goals/delete/${cuid}`, 'post').then(() => dispatch(deleteGoal(cuid)))
   }
 }
 
