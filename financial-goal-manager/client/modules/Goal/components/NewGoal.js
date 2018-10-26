@@ -20,13 +20,50 @@ class NewGoal extends Component {
       }, {
         year: currentYear + 2,
         value: ''
-      }
-    ]}
+      }]
+    }
   }
 
-  componentWillMount() {
+  componentWillMount () {
     this.renderOptionsDropdown = this.renderOptionsDropdown.bind(this)
     this.renderRadio = this.renderRadio.bind(this)
+    this.enterYearAmount = this.enterYearAmount.bind(this)
+    this.addYear = this.addYear.bind(this)
+    this.removeYear = this.removeYear.bind(this)
+  }
+
+  enterYearAmount (event, item) {
+    const { years } = this.state
+    const value = event.target.value
+    const newYears = [...years]
+    const currYear = newYears.find(ny => ny.year === item.year)
+
+    if (currYear) {
+      currYear.value = value
+      this.setState({ years: newYears })
+    }
+  }
+
+  removeYear (year) {
+    const { years } = this.state
+    const newYears = years.filter(ny => ny.year !== year.year)
+
+    this.setState({ years: newYears })
+  }
+
+  addYear () {
+    const { years } = this.state
+    const lastYear = years && years.length
+      ? years[years.length - 1].year
+      : new Date().getFullYear()
+
+    const newYears = [...years]
+    newYears.push({
+      year: lastYear + 1,
+      amount: ''
+    })
+
+    this.setState({ years: newYears })
   }
 
   renderOptionsDropdown () {
@@ -63,8 +100,8 @@ class NewGoal extends Component {
       <div className='form-group'>
         <label htmlFor='placeholder'>
           <h5>Goal Type</h5>
-          <input type='radio' checked={selectedType === 'savings'} value='savings' onChange={onChange}/> Savings<br />
-          <input type='radio' checked={selectedType === 'debt'} value='debt' onChange={onChange}/> Debt Reduction<br />
+          <input type='radio' checked={selectedType === 'savings'} value='savings' onChange={onChange} /> Savings<br />
+          <input type='radio' checked={selectedType === 'debt'} value='debt' onChange={onChange} /> Debt Reduction<br />
         </label>
       </div>
     )
@@ -108,26 +145,14 @@ class NewGoal extends Component {
                             type='number'
                             className='input-sm'
                             value={y.value}
-                            onChange={(event) => {
-                              const value = event.target.value
-                              const newYears = [...years]
-                              const currYear = newYears.find(ny => ny.year === y.year)
-
-                              if (currYear) {
-                                currYear.value = value
-                                this.setState({ years: newYears })
-                              }
-                            }}
+                            onChange={(event) => this.enterYearAmount(event, y)}
                           />
                         </td>
                         <td>
                           <button
                             className='btn btn-sm btn-link'
                             style={{ padding: '0px' }}
-                            onClick={() => {
-                              const newYears = years.filter(ny => ny.year !== y.year)
-                              this.setState({ years: newYears })
-                            }}
+                            onClick={() => this.removeYear(y)}
                           >
                             Delete
                           </button>
@@ -141,18 +166,7 @@ class NewGoal extends Component {
                 <button
                   type='button'
                   className='btn btn-outline-secondary btn-sm'
-                  onClick={() => {
-                    const lastYear = years && years.length
-                      ? years[years.length - 1].year
-                      : new Date().getFullYear()
-                    const newYears = [...years]
-                    newYears.push({
-                      year: lastYear + 1,
-                      amount: ''
-                    })
-
-                    this.setState({ years: newYears })
-                  }}
+                  onClick={this.addYear}
                 >
                   Add Year
                 </button>

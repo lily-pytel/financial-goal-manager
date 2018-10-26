@@ -4,8 +4,7 @@ import { connect } from 'react-redux'
 
 // Import Components
 import Goals from '../components/Goals'
-import NewGoal from '../components/NewGoal'
-//import TutorAdvice from '../../Tutor/components/TutorAdvice'
+import GoalCreatorButton from '../components/GoalCreatorButton'
 
 // Import Selectors
 import { fetchGoals } from '../GoalsActions'
@@ -14,10 +13,6 @@ import { getGoals } from '../GoalsReducer'
 class GoalsPage extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      goalModalOpen: true,
-      tutorModalOpen: false
-    }
   }
 
   componentDidMount () {
@@ -25,7 +20,6 @@ class GoalsPage extends Component {
   }
 
   render () {
-    const { goalModalOpen, tutorModalOpen } = this.state
     const { goals } = this.props
 
     if (!goals) {
@@ -37,34 +31,7 @@ class GoalsPage extends Component {
     return (
       <div>
         <Goals goals={this.props.goals} />
-        <div className='row'>
-          <div className='col'>
-            <button
-              className='btn btn-primary btn-sm'
-              onClick={(click) => {
-                this.setState({ goalModalOpen: !goalModalOpen })
-              }}
-            >
-              Create a goal
-            </button>
-            <br />
-            <button
-              className='btn btn-link'
-              onClick={(click) => {
-                this.setState({ tutorModalOpen: !tutorModalOpen })
-              }}
-            >
-              Help me choose a goal
-            </button>
-          </div>
-        </div>
-        <NewGoal
-          modalOpen={goalModalOpen}
-          onSubmit={() => {}}
-          onCancel={() => {
-            this.setState({ goalModalOpen: false })
-          }}
-        />
+        <GoalCreatorButton />
       </div>
     )
   }
