@@ -9,8 +9,8 @@ function GoalsHeader (props) {
   })
   const headerYearSecondary = years.map(year => {
     return [
-      <th scope='col' key={`yeargoal${year.year}`}>Goal</th>,
-      <th scope='col' key={`yearprogress${year.year}`}>Progress</th>
+      <th scope='col' style={{ width: '100px' }} key={`yeargoal${year.year}`}>Goal</th>,
+      <th scope='col' style={{ width: '100px' }} key={`yearprogress${year.year}`}>Progress</th>
     ]
   })
 

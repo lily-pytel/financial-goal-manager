@@ -43,7 +43,9 @@ class NewGoal extends Component {
       name: selectedOption.label,
       type: selectedOption.value,
       description: '',
-      years: years.filter(y => y.year && y.value)
+      years: years
+        .filter(y => y.year && y.value)
+        .map(y => ({ year: y.year, value: parseInt(y.value, 10) }))
     }
 
     dispatch(addGoalRequest(goal))
