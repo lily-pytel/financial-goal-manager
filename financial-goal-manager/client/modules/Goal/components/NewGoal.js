@@ -12,13 +12,13 @@ class NewGoal extends Component {
       selectedOption: null,
       selectedType: null,
       years: [{
-        id: currentYear,
+        year: currentYear,
         value: ''
       }, {
-        id: currentYear + 1,
+        year: currentYear + 1,
         value: ''
       }, {
-        id: currentYear + 2,
+        year: currentYear + 2,
         value: ''
       }
     ]}
@@ -101,17 +101,17 @@ class NewGoal extends Component {
                       </tr>
                     </thead>
                     <tbody>
-                      {years.map(y => <tr key={y.id}>
-                        <th scope='row'>{y.id}</th>
+                      {years.map(y => <tr key={y.year}>
+                        <th scope='row'>{y.year}</th>
                         <td>
                           <input
-                            type='text'
+                            type='number'
                             className='input-sm'
                             value={y.value}
                             onChange={(event) => {
                               const value = event.target.value
                               const newYears = [...years]
-                              const currYear = newYears.find(ny => ny.id === y.id)
+                              const currYear = newYears.find(ny => ny.year === y.year)
 
                               if (currYear) {
                                 currYear.value = value
@@ -125,7 +125,7 @@ class NewGoal extends Component {
                             className='btn btn-sm btn-link'
                             style={{ padding: '0px' }}
                             onClick={() => {
-                              const newYears = years.filter(ny => ny.id !== y.id)
+                              const newYears = years.filter(ny => ny.year !== y.year)
                               this.setState({ years: newYears })
                             }}
                           >
@@ -143,11 +143,11 @@ class NewGoal extends Component {
                   className='btn btn-outline-secondary btn-sm'
                   onClick={() => {
                     const lastYear = years && years.length
-                      ? years[years.length - 1].id
+                      ? years[years.length - 1].year
                       : new Date().getFullYear()
                     const newYears = [...years]
                     newYears.push({
-                      id: lastYear + 1,
+                      year: lastYear + 1,
                       amount: ''
                     })
 
