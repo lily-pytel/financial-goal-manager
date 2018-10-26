@@ -25,7 +25,7 @@ function GoalsBody (props) {
 
               return [
                 <td key={`inner${year}goal`}>{yearGoal && yearGoal[0] && yearGoal[0].value}</td>,
-                <td key={`inner${year}progress`}>{totalProgress}</td>
+                <td key={`inner${year}progress`}>{totalProgress !== 0 ? totalProgress : ''}</td>
               ]
             })}
             <td>

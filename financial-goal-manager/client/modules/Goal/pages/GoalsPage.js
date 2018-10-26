@@ -11,10 +11,6 @@ import { fetchGoals } from '../GoalsActions'
 import { getGoals } from '../GoalsReducer'
 
 class GoalsPage extends Component {
-  constructor (props) {
-    super(props)
-  }
-
   componentDidMount () {
     this.props.dispatch(fetchGoals())
   }

@@ -55,10 +55,12 @@ function Goals (props) {
       .map(g => g.progress)
       .map(g => {
         const goalsPerYear = g.find(y => new Date(y[0].date).getFullYear() === year)
-        const totalAmount = goalsPerYear.reduce((acc, current) => {
-          const currVal = (current && current.value) || 0
-          return acc + currVal
-        }, 0)
+        const totalAmount = goalsPerYear
+          ? goalsPerYear.reduce((acc, current) => {
+            const currVal = (current && current.value) || 0
+            return acc + currVal
+          }, 0)
+          : 0
         return totalAmount
       })
       .reduce((acc, current) => acc + current, 0)
