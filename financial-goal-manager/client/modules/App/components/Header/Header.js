@@ -10,6 +10,7 @@ export function Header (props, context) {
   return (
     <div className={styles.header}>
       <nav className='navbar navbar-expand-lg navbar-light bg-light'>
+        <a className='navbar-brand' to='/'>Financial Goal Planner</a>
         <ul className='navbar-nav mr-auto'>
           <li className={`nav-item ${location === '/' ? 'active' : ''}`}>
             <Link className='nav-link' to='/' >Dashboard</Link>
