@@ -18,9 +18,15 @@ const config = {
   },
   xAxis: {
     type: 'datetime',
-    minTickInterval: 28 * 24 * 3600 * 1000,
+    minTickInterval: 90 * 24 * 3600 * 1000,
     title: {
       text: 'Year'
+    },
+    labels: {
+      formatter: function () {
+        const date = new Date(this.value)
+        return `${date.toLocaleDateString('en-us', { month: 'long', year: 'numeric' })}`
+      }
     }
   },
   yAxis: {
@@ -75,7 +81,7 @@ class GoalDetailsPage extends Component {
       .map(y => y[0])
       .forEach(y => {
         goalSeries.push([
-          Date.UTC(y.year, 0, 1, 1),
+          Date.UTC(y.year, 0, 1),
           y.value
         ])
         goalSeries.push([
@@ -86,6 +92,7 @@ class GoalDetailsPage extends Component {
 
     const progressSeries = goal.progress
       .map(progress => progress[0])
+      .filter(progress => progress)
       .map(progress => {
         const d = new Date(progress.date)
 
@@ -96,7 +103,10 @@ class GoalDetailsPage extends Component {
       })
       .sort((a, b) => a[0] - b[0])
 
-    config.subtitle = { text: `from ${firstYear} to ${lastYear}` }
+    config.subtitle = firstYear && firstYear.length && lastYear && lastYear.length
+      ? { text: `from ${firstYear[0].year} to ${lastYear[0].year}` }
+      : 'Progress Report'
+
     config.xAxis = { ...config.xAxis, categories: years }
     config.series = [
       {
@@ -145,7 +155,7 @@ class GoalDetailsPage extends Component {
   }
 
   render () {
-    const { goal } = this.props
+    const { goal, progressAdded } = this.props
     const { pendingProgress } = this.state
 
     if (!goal) {
@@ -178,16 +188,17 @@ class GoalDetailsPage extends Component {
             </tr>
           </thead>
           <tbody>
-            {goal.progress.map(row => this.renderProgressRow(row[0]))}
+            {goal.progress.filter(row => row && row[0]).map(row => this.renderProgressRow(row[0]))}
           </tbody>
         </table>
-        <div className='row'>
-          <div className='col'>
-            <label>
+        <div className='card'>
+          <div className='card-body'>
+            <h5 className='card-title'>Add Progress</h5>
+            <label style={{ marginRight: '10px' }}>
               Date:
               <input
                 type='date'
-                className='form-control'
+                className='form-control form-control-sm'
                 value={pendingProgress.date}
                 onChange={(event) => {
                   const value = event.target.value
@@ -200,11 +211,11 @@ class GoalDetailsPage extends Component {
                 }}
               />
             </label>
-            <label>
+            <label style={{ marginRight: '10px' }}>
               Amount:
               <input
                 type='number'
-                className='form-control'
+                className='form-control form-control-sm'
                 value={pendingProgress.value}
                 onChange={(event) => {
                   const value = event.target.value
@@ -225,6 +236,9 @@ class GoalDetailsPage extends Component {
             >
               Add
             </button>
+            {progressAdded && <div className='alert alert-success' role='alert'>
+              Progress saved. Please refresh the page to see it.
+            </div>}
           </div>
         </div>
       </div>
@@ -235,6 +249,7 @@ class GoalDetailsPage extends Component {
 // Retrieve data from store as props
 function mapStateToProps (state, existingProps) {
   return {
+    progressAdded: state.goals.progressAdded,
     goal: getGoal(state, existingProps.params.id)
   }
 }

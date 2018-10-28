@@ -1,7 +1,7 @@
 import { LOAD_GOALS, ADD_GOAL, ADD_PROGRESS, DELETE_GOAL, DELETE_PROGRESS } from './GoalsActions'
 
 // Initial State
-const initialState = { data: [] }
+const initialState = { data: [], progressAdded: null }
 
 const GoalReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -28,6 +28,7 @@ const GoalReducer = (state = initialState, action) => {
         newGoalsAddProgress = newGoalsAddProgress.sort((a, b) => a.name.localeCompare(b.name))
 
         return {
+          progressAdded: true,
           data: newGoalsAddProgress
         }
       }
