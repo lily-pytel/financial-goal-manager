@@ -14,6 +14,7 @@ class NewGoal extends Component {
       customGoal: false,
       selectedOption: null,
       selectedType: null,
+      description: '',
       years: [{
         year: currentYear,
         value: ''
@@ -37,12 +38,12 @@ class NewGoal extends Component {
   }
 
   saveGoal () {
-    const { selectedOption, years } = this.state
+    const { selectedOption, years, description } = this.state
     const { dispatch, onCancel } = this.props
     const goal = {
       name: selectedOption.label,
       type: selectedOption.value,
-      description: '',
+      description,
       years: years
         .filter(y => y.year && y.value)
         .map(y => ({ year: y.year, value: parseInt(y.value, 10) }))
@@ -98,6 +99,7 @@ class NewGoal extends Component {
       <div className='form-group'>
         <h5>Goal Name</h5>
         <Select
+          className='input-sm'
           style={{ width: '100%' }}
           value={this.state.selectedOption}
           onChange={(selectedOption) => {
@@ -135,7 +137,7 @@ class NewGoal extends Component {
   }
 
   render () {
-    const { years, selectedOption } = this.state
+    const { years, selectedOption, description } = this.state
     const { modalOpen, onCancel } = this.props
 
     return (
@@ -150,6 +152,15 @@ class NewGoal extends Component {
             </div>
             <div className='modal-body'>
               {this.renderOptionsDropdown()}
+              <div className='form-group'>
+                <h5>Description</h5>
+                <input
+                  type='text'
+                  className='form-control form-control-sm'
+                  value={description}
+                  onChange={(event) => this.setState({ description: event.target.value })}
+                />
+              </div>
               {this.renderRadio()}
               <div className='form-group'>
                 <label htmlFor='placeholder'>
@@ -168,7 +179,7 @@ class NewGoal extends Component {
                         <td>
                           <input
                             type='number'
-                            className='input-sm'
+                            className='form-control form-control-sm'
                             value={y.value}
                             onChange={(event) => this.enterYearAmount(event, y)}
                           />
@@ -200,13 +211,13 @@ class NewGoal extends Component {
             <div className='modal-footer'>
               <button
                 type='button'
-                className='btn btn-primary'
+                className='btn btn-sm btn-primary'
                 onClick={this.saveGoal}
                 disabled={!selectedOption || !years || !years.length}
               >
                 Submit
               </button>
-              <button type='button' className='btn btn-secondary' onClick={onCancel}>Close</button>
+              <button type='button' className='btn btn-sm btn-secondary' onClick={onCancel}>Close</button>
             </div>
           </div>
         </div>
