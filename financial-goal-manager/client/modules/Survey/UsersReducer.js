@@ -1,7 +1,7 @@
-import { LOAD_USER, UPDATE_USER } from './UsersActions'
+import { LOAD_USER, UPDATE_USER, DISMISS_UPDATE_MESSAGE } from './UsersActions'
 
 // Initial State
-const initialState = { data: [] }
+const initialState = { data: [], userSaved: false }
 
 const UsersReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -12,7 +12,14 @@ const UsersReducer = (state = initialState, action) => {
 
     case UPDATE_USER :
       return {
+        userSaved: true,
         data: action.users
+      }
+
+    case DISMISS_UPDATE_MESSAGE:
+      return {
+        ...state,
+        userSaved: false
       }
 
     default:

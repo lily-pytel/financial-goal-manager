@@ -3,6 +3,7 @@ import callApi from '../../util/apiCaller'
 // Export Constants
 export const LOAD_USER = 'LOAD_USER'
 export const UPDATE_USER = 'UPDATE_USER'
+export const DISMISS_UPDATE_MESSAGE = 'DISMISS_UPDATE_MESSAGE'
 
 // Export Actions
 export function updateUser (users) {
@@ -16,6 +17,18 @@ export function loadUser (users) {
   return {
     type: LOAD_USER,
     users
+  }
+}
+
+export function dismissUpdateMessageDispatch () {
+  return {
+    type: DISMISS_UPDATE_MESSAGE
+  }
+}
+
+export function dismissUpdateMessage () {
+  return (dispatch) => {
+    return dispatch(dismissUpdateMessageDispatch())
   }
 }
 

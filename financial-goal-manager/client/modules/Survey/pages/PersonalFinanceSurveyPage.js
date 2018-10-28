@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 // Import Selectors
 import { getUser } from '../UsersReducer'
-import { fetchUser, addUserRequest } from '../UsersActions'
+import { fetchUser, addUserRequest, dismissUpdateMessage } from '../UsersActions'
 
 class PersonalFinanceSurveyPage extends Component {
   componentWillMount () {
@@ -86,7 +86,7 @@ class PersonalFinanceSurveyPage extends Component {
   }
 
   render () {
-    const { dispatch } = this.props
+    const { dispatch, userSaved } = this.props
     const titleStyle = {
       backgroundColor: '#e9ecef',
       padding: '8px 5px',
@@ -225,6 +225,23 @@ class PersonalFinanceSurveyPage extends Component {
             <button className='btn btn-primary' onClick={() => { dispatch(addUserRequest(this.state)) }}>Save</button>
           </div>
         </div>
+
+        {userSaved && <div className='row' style={{ marginTop: '10px' }}>
+          <div className='col'>
+            <div className='alert alert-success alert-dismissible fade show' role='alert'>
+              User saved successfully
+              <button
+                type='button'
+                className='close'
+                aria-label='Close'
+                style={{ padding: '5px' }}
+                onClick={() => dispatch(dismissUpdateMessage())}
+              >
+                <span aria-hidden='true'>&times;</span>
+              </button>
+            </div>
+          </div>
+        </div>}
       </div>
     )
   }
@@ -233,6 +250,7 @@ class PersonalFinanceSurveyPage extends Component {
 // Retrieve data from store as props
 function mapStateToProps (state) {
   return {
+    userSaved: state.users.userSaved,
     user: getUser(state)
   }
 }
