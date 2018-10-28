@@ -29,9 +29,7 @@ function GoalsBody (props) {
               ]
             })}
             <td>
-              <button className='btn btn-link'>E</button>
-              &nbsp;|&nbsp;
-              <button className='btn btn-link' onClick={() => dispatch(deleteGoalequest(goal._id))}>D</button>
+              <button className='btn btn-link' onClick={() => dispatch(deleteGoalequest(goal._id))}>Delete</button>
             </td>
           </tr>
         )
