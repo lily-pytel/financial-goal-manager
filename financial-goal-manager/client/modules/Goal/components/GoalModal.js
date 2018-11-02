@@ -5,16 +5,27 @@ import Select from 'react-select'
 
 import { addGoalRequest, closeGoalModal } from '../GoalsActions'
 
-class NewGoal extends Component {
+const dropdownOptions = [
+  { value: 'emergency', label: 'Save for emergency' },
+  { value: 'salary', label: 'Save part of salary' },
+  { value: 'salary', label: 'Save part of bonus' },
+  { value: 'retirement', label: 'Save for retirement' },
+  { value: 'debt', label: 'Pay off debt' }
+]
+
+class GoalModal extends Component {
   constructor (props) {
     super(props)
 
+    const { goalToEdit } = this.props
     const currentYear = new Date().getFullYear()
+    const selectedOption = goalToEdit && dropdownOptions.find(o => o.label === goalToEdit.name)
+
     this.state = {
       customGoal: false,
-      selectedOption: null,
+      selectedOption: selectedOption,
       selectedType: null,
-      description: '',
+      description: goalToEdit && goalToEdit.description,
       years: [{
         year: currentYear,
         value: ''
@@ -37,10 +48,47 @@ class NewGoal extends Component {
     this.saveGoal = this.saveGoal.bind(this)
   }
 
+  componentDidUpdate (prevProps, prevState) {
+    const { goalToEdit } = this.props
+
+    if (goalToEdit && goalToEdit !== prevProps.goalToEdit) {
+      this.loadExistingGoal()
+    }
+  }
+
+  loadExistingGoal () {
+    const { goalToEdit } = this.props
+    const selectedOption = goalToEdit && dropdownOptions.find(o => o.label === goalToEdit.name)
+    const sortedYears = goalToEdit.years
+      .filter(y => y && y[0])
+      .map(y => y[0])
+      .sort((a, b) => a - b)
+    const currentYear = new Date().getFullYear()
+    const firstYear = sortedYears && sortedYears.length && sortedYears[0].year && sortedYears[0].year < currentYear
+      ? sortedYears[0].year
+      : currentYear
+    const lastYear = sortedYears && sortedYears.length && sortedYears[sortedYears.length - 1].year
+    const years = []
+
+    for (let i = firstYear; i <= lastYear; i++) {
+      let exists = sortedYears.find(y => y.year === i)
+      years.push({ year: i, value: exists ? exists.value : '' })
+    }
+
+    this.setState({
+      customGoal: false,
+      selectedOption: selectedOption,
+      selectedType: null,
+      description: goalToEdit && goalToEdit.description,
+      years
+    })
+  }
+
   saveGoal () {
     const { selectedOption, years, description } = this.state
-    const { dispatch } = this.props
+    const { dispatch, goalToEdit } = this.props
     const goal = {
+      _id: goalToEdit && goalToEdit._id,
       name: selectedOption.label,
       type: selectedOption.value,
       description,
@@ -88,13 +136,6 @@ class NewGoal extends Component {
   }
 
   renderOptionsDropdown () {
-    var options = [
-      { value: 'emergency', label: 'Save for emergency' },
-      { value: 'salary', label: 'Save part of salary' },
-      { value: 'retirement', label: 'Save for retirement' },
-      { value: 'debt', label: 'Pay off debt' }
-    ]
-
     return (
       <div className='form-group'>
         <h5>Goal Name</h5>
@@ -105,7 +146,7 @@ class NewGoal extends Component {
           onChange={(selectedOption) => {
             this.setState({ selectedOption })
           }}
-          options={options}
+          options={dropdownOptions}
         />
         <hr />
       </div>
@@ -226,7 +267,7 @@ class NewGoal extends Component {
   }
 }
 
-NewGoal.propTypes = {
+GoalModal.propTypes = {
   dispatch: PropTypes.func.isRequired
 }
 
@@ -238,4 +279,4 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps)(NewGoal)
+export default connect(mapStateToProps)(GoalModal)

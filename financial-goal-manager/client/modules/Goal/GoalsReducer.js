@@ -1,6 +1,7 @@
 import {
   LOAD_GOALS,
   ADD_GOAL,
+  EDIT_GOAL,
   ADD_PROGRESS,
   DELETE_GOAL,
   DELETE_PROGRESS,
@@ -45,6 +46,17 @@ const GoalReducer = (state = initialState, action) => {
         data: sortedNewGoals,
         progressAdded: false,
         progressDeleted: false
+      }
+
+    case EDIT_GOAL :
+      const filteredGoals = state.data.filter(goal => goal._id !== action.goal._id)
+      filteredGoals.push(action.goal)
+
+      const sortFiltered = filteredGoals.sort((a, b) => a.name.localeCompare(b.name))
+
+      return {
+        ...initialState,
+        data: sortFiltered
       }
 
     case ADD_PROGRESS :

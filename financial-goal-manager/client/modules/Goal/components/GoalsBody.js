@@ -4,28 +4,10 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { FaPen, FaTrashAlt } from 'react-icons/fa'
 
-import NewGoal from './NewGoal'
-
-import { deleteGoalequest } from '../GoalsActions'
+import { deleteGoalequest, openGoalModal } from '../GoalsActions'
 
 class GoalsBody extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      goalModalOpen: false
-    }
-  }
-
-  componentWillMount () {
-    this.setModalStatus = this.setModalStatus.bind(this)
-  }
-
-  setModalStatus (modalName, modalStatus) {
-    this.setState({ [modalName]: modalStatus })
-  }
-
   render () {
-    const { goalModalOpen } = this.state
     const { years, goals, dispatch } = this.props
 
     return (
@@ -49,14 +31,13 @@ class GoalsBody extends Component {
                 ]
               })}
               <td>
-                <button className='btn btn-link' onCancel={() => this.setModalStatus('goalModalOpen', true)}><FaPen /></button>
-                <NewGoal
-                  modalOpen={goalModalOpen}
-                  onSubmit={() => {}}
-                  onCancel={() => this.setModalStatus('goalModalOpen', false)}
-                />
+                <button className='btn btn-link' onClick={() => dispatch(openGoalModal(goal))}>
+                  <FaPen />
+                </button>
                 |
-                <button className='btn btn-link' onClick={() => dispatch(deleteGoalequest(goal._id))}><FaTrashAlt /></button>
+                <button className='btn btn-link' onClick={() => dispatch(deleteGoalequest(goal._id))}>
+                  <FaTrashAlt />
+                </button>
               </td>
             </tr>
           )

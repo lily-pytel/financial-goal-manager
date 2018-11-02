@@ -8,12 +8,13 @@ export const DELETE_GOAL = 'DELETE_GOAL'
 export const DELETE_PROGRESS = 'DELETE_PROGRESS'
 export const OPEN_GOAL_MODAL = 'OPEN_GOAL_MODAL'
 export const CLOSE_GOAL_MODAL = 'CLOSE_GOAL_MODAL'
+export const EDIT_GOAL = 'EDIT_GOAL'
 
 // Export Actions
-export function openGoalModal (goal) {
+export function openGoalModal (goalToEdit) {
   return {
     type: OPEN_GOAL_MODAL,
-    goal
+    goalToEdit
   }
 }
 
@@ -26,6 +27,13 @@ export function closeGoalModal () {
 export function addGoal (goal) {
   return {
     type: ADD_GOAL,
+    goal
+  }
+}
+
+export function editGoal (goal) {
+  return {
+    type: EDIT_GOAL,
     goal
   }
 }
@@ -47,9 +55,15 @@ export function fetchGoals () {
 
 export function addGoalRequest (goal) {
   return (dispatch) => {
-    return callApi('goals/add', 'post', { goal }).then(res => {
-      dispatch(addGoal(res.goal))
-    })
+    if (goal._id) {
+      return callApi('goals/edit', 'post', { goal }).then(res => {
+        dispatch(editGoal(res.goal))
+      })
+    } else {
+      return callApi('goals/add', 'post', { goal }).then(res => {
+        dispatch(addGoal(res.goal))
+      })
+    }
   }
 }
 
