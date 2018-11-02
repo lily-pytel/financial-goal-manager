@@ -3,13 +3,13 @@
 A financial goal planner created for the Georgia Tech OMSCS Class "CS6460: Educational Technology".
 The tool allows user to set financial goals, enter progress for them, and get advice based on their financial situation.
 
-## Requirements for development:
+## Requirements For Development
 
 - Node
 - Docker
 - MongoDB
 
-## Requirements to run:
+## Requirements For Production
 
 - Docker
 - docker-compose
