@@ -1,7 +1,8 @@
 import React from 'react'
 
-const advice = {
-  noEmergencySavings: {
+const advice = [
+  {
+    key: 'noEmergencySavings',
     title: 'Emergency Savings',
     paragraphs: [
       (<p key={'p1'}>
@@ -14,26 +15,21 @@ const advice = {
         Start by saving any amount you can - any contribution matters!
       </p>)
     ],
-    usefulLinks: [
-      {
-        link: 'https://www.wellsfargo.com/financial-education/basic-finances/manage-money/cashflow-savings/emergencies/',
-        label: 'Saving for an Emergency'
-      },
-      {
-        link: 'https://investor.vanguard.com/emergency-fund/amount',
-        label: 'What\'s the right emergency fund amount?'
-      },
-      {
-        link: 'https://learnvest.com/article/how-much-should-i-save-in-an-emergency-fund',
-        label: 'How Much Should I Save in an Emergency Fund?'
-      },
-      {
-        link: 'https://www.discover.com/online-banking/banking-topics/where-to-keep-emergency-fund/',
-        label: '4 Places to Keep Your Emergency Fund'
-      }
-    ]
-  },
-  lowEmergencySavings: {
+    usefulLinks: [{
+      link: 'https://www.wellsfargo.com/financial-education/basic-finances/manage-money/cashflow-savings/emergencies/',
+      label: 'Saving for an Emergency'
+    }, {
+      link: 'https://investor.vanguard.com/emergency-fund/amount',
+      label: 'What\'s the right emergency fund amount?'
+    }, {
+      link: 'https://learnvest.com/article/how-much-should-i-save-in-an-emergency-fund',
+      label: 'How Much Should I Save in an Emergency Fund?'
+    }, {
+      link: 'https://www.discover.com/online-banking/banking-topics/where-to-keep-emergency-fund/',
+      label: '4 Places to Keep Your Emergency Fund'
+    }]
+  }, {
+    key: 'lowEmergencySavings',
     title: 'Emergency Savings',
     paragraphs: [
       (<p key={'p1'}>
@@ -48,22 +44,18 @@ const advice = {
         Start by saving any amount you can - any contribution matters!
       </p>)
     ],
-    usefulLinks: [
-      {
-        link: 'https://investor.vanguard.com/emergency-fund/amount',
-        label: 'What\'s the right emergency fund amount?'
-      },
-      {
-        link: 'https://learnvest.com/article/how-much-should-i-save-in-an-emergency-fund',
-        label: 'How Much Should I Save in an Emergency Fund?'
-      },
-      {
-        link: 'https://www.discover.com/online-banking/banking-topics/where-to-keep-emergency-fund/',
-        label: '4 Places to Keep Your Emergency Fund'
-      }
-    ]
-  },
-  moreWealth: {
+    usefulLinks: [{
+      link: 'https://investor.vanguard.com/emergency-fund/amount',
+      label: 'What\'s the right emergency fund amount?'
+    }, {
+      link: 'https://learnvest.com/article/how-much-should-i-save-in-an-emergency-fund',
+      label: 'How Much Should I Save in an Emergency Fund?'
+    }, {
+      link: 'https://www.discover.com/online-banking/banking-topics/where-to-keep-emergency-fund/',
+      label: '4 Places to Keep Your Emergency Fund'
+    }]
+  }, {
+    key: 'moreWealth',
     title: 'Building Wealth',
     paragraphs: [
       (<p key={'p1'}>
@@ -92,38 +84,30 @@ const advice = {
         but there is also nothing wrong with using <strong>some</strong> of your excess money for fun investments.
       </p>)
     ],
-    usefulLinks: [
-      {
-        link: 'https://www.bankrate.com/calculators/retirement/investment-goal-calculator.aspx',
-        label: 'Investment Calculator - Calculate your investment earnings'
-      },
-      {
-        link: 'https://money.usnews.com/money/blogs/the-smarter-mutual-fund-investor/2015/03/25/how-much-cash-is-too-much-cash-for-your-portfolio',
-        label: 'How Much Cash Is Too Much Cash for Your Portfolio?'
-      },
-      {
-        link: 'https://www.investopedia.com/articles/personal-finance/040915/how-much-cash-should-i-keep-bank.asp',
-        label: 'How Much Cash Should I Keep in the Bank?'
-      },
-      {
-        link: 'https://money.usnews.com/money/blogs/the-smarter-mutual-fund-investor/2014/10/08/4-reasons-why-cash-is-king',
-        label: '4 Reasons Why Cash Is King'
-      },
-      {
-        link: 'https://www.forbes.com/sites/advisor/2018/02/23/if-youve-been-stockpiling-cash-youre-not-alone-heres-what-you-need-to-do/#56fcc5e826d1',
-        label: 'Don\'t Be Ashamed You\'re Holding So Much Cash'
-      },
-      {
-        link: 'https://www.businessinsider.com/when-to-invest-in-stocks-2018-7',
-        label: 'Even the Americans sitting on piles of cash aren\'t using it correctly to build wealth'
-      },
-      {
-        link: 'https://www.businessinsider.com/when-to-invest-in-stocks-2018-7',
-        label: 'Think Twice Before Investing In Individual Stocks'
-      }
-    ]
-  },
-  highInterestDebt: {
+    usefulLinks: [{
+      link: 'https://www.bankrate.com/calculators/retirement/investment-goal-calculator.aspx',
+      label: 'Investment Calculator - Calculate your investment earnings'
+    }, {
+      link: 'https://money.usnews.com/money/blogs/the-smarter-mutual-fund-investor/2015/03/25/how-much-cash-is-too-much-cash-for-your-portfolio',
+      label: 'How Much Cash Is Too Much Cash for Your Portfolio?'
+    }, {
+      link: 'https://www.investopedia.com/articles/personal-finance/040915/how-much-cash-should-i-keep-bank.asp',
+      label: 'How Much Cash Should I Keep in the Bank?'
+    }, {
+      link: 'https://money.usnews.com/money/blogs/the-smarter-mutual-fund-investor/2014/10/08/4-reasons-why-cash-is-king',
+      label: '4 Reasons Why Cash Is King'
+    }, {
+      link: 'https://www.forbes.com/sites/advisor/2018/02/23/if-youve-been-stockpiling-cash-youre-not-alone-heres-what-you-need-to-do/#56fcc5e826d1',
+      label: 'Don\'t Be Ashamed You\'re Holding So Much Cash'
+    }, {
+      link: 'https://www.businessinsider.com/when-to-invest-in-stocks-2018-7',
+      label: 'Even the Americans sitting on piles of cash aren\'t using it correctly to build wealth'
+    }, {
+      link: 'https://www.businessinsider.com/when-to-invest-in-stocks-2018-7',
+      label: 'Think Twice Before Investing In Individual Stocks'
+    }]
+  }, {
+    key: 'highInterestDebt',
     title: 'High Interest Debt',
     paragraphs: [
       (<p key={'p1'}>
@@ -151,29 +135,28 @@ const advice = {
         into paying beyond the minimum payment.
       </p>)
     ],
-    usefulLinks: [
-      {
-        link: 'https://www.nbcnews.com/better/business/how-debt-avalanche-method-helped-one-woman-pay-68-000-ncna881356',
-        label: 'How to pay off your loans using the \'debt avalanche\' method'
-      },
-      {
-        link: 'https://www.cnbc.com/2017/09/13/how-much-americans-at-have-in-their-savings-accounts.html',
-        label: 'Here\'s how much money Americans have in their savings accounts'
-      },
-      {
-        link: 'https://www.bankrate.com/banking/savings/these-guidelines-will-help-you-decide-whether-to-pay-down-debt-or-save/',
-        label: 'Should you pay debts first or save? Use these guidelines to decide'
-      },
-      {
-        link: 'http://time.com/money/collection-post/2791960/which-debts-should-i-pay-off-first/',
-        label: 'Which Debts Should I Pay Off First?'
-      },
-      {
-        link: 'https://www.forbes.com/sites/nancyanderson/2013/10/11/when-not-to-pay-off-your-high-interest-credit-card-debt/#297f7e8f136a',
-        label: 'When Not To Pay Off Your High-Interest Credit Card Debt'
-      }
-    ]
-  }
-}
+    usefulLinks: [{
+      link: 'https://www.nbcnews.com/better/business/how-debt-avalanche-method-helped-one-woman-pay-68-000-ncna881356',
+      label: 'How to pay off your loans using the \'debt avalanche\' method'
+    }, {
+      link: 'https://www.nbcnews.com/better/business/how-get-out-debt-build-wealth-snowball-ncna864111',
+      label: 'How to get out of debt and build a \'wealth snowball\''
+    }, {
+      link: 'https://www.bankrate.com/banking/savings/these-guidelines-will-help-you-decide-whether-to-pay-down-debt-or-save/',
+      label: 'Should you pay debts first or save? Use these guidelines to decide'
+    }, {
+      link: 'http://time.com/money/collection-post/2791960/which-debts-should-i-pay-off-first/',
+      label: 'Which Debts Should I Pay Off First?'
+    }, {
+      link: 'https://www.forbes.com/sites/nancyanderson/2013/10/11/when-not-to-pay-off-your-high-interest-credit-card-debt/#297f7e8f136a',
+      label: 'When Not To Pay Off Your High-Interest Credit Card Debt'
+    }, {
+      link: 'https://investorjunkie.com/29981/investments-paying-high-rate-debt/',
+      label: 'The Best Type of Investment: Paying Off High-Interest Rate Debt'
+    }, {
+      link: 'https://www.cnbc.com/2017/09/13/how-much-americans-at-have-in-their-savings-accounts.html',
+      label: 'Here\'s how much money Americans have in their savings accounts'
+    }]
+  }]
 
 export default advice
