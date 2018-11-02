@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import ReactHighcharts from 'react-highcharts'
+import { FaTrashAlt } from 'react-icons/fa'
 import './GoalDetailsPage.css'
 
 // Import Selectors
@@ -147,7 +148,7 @@ class GoalDetailsPage extends Component {
             style={{ padding: '0' }}
             onClick={() => this.deleteProgress(row)}
           >
-            Delete
+            <FaTrashAlt />
           </button>
         </td>
       </tr>
