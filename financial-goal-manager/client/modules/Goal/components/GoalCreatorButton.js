@@ -35,6 +35,7 @@ class GoalCreatorButton extends Component {
             </button>
             <br />
             <button
+              style={{ paddingLeft: '0' }}
               className='btn btn-link'
               onClick={() => this.setModalStatus('tutorModalOpen', true)}
             >
@@ -48,6 +49,7 @@ class GoalCreatorButton extends Component {
           onCancel={() => this.setModalStatus('goalModalOpen', false)}
         />
         <TutorAdvice
+          adviceName={'moreWealth'}
           modalOpen={tutorModalOpen}
           onSubmit={() => {}}
           onCancel={() => this.setModalStatus('tutorModalOpen', false)}

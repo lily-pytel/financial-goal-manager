@@ -1,33 +1,32 @@
 import React from 'react'
+import { Link } from 'react-router'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import advice from '../data/advice'
 
 function TutorAdvice (props) {
-  const { modalOpen } = props
+  const { modalOpen, adviceName } = props
+  const currAdvice = advice[adviceName]
+
   return (
     <div className='modal' tabIndex='-1' role='dialog' style={{ display: modalOpen ? 'block' : 'none' }}>
       <div className='modal-dialog' role='document'>
         <div className='modal-content'>
           <div className='modal-header'>
-            <h5 className='modal-title'>Emergency Savings</h5>
+            <h5 className='modal-title'>{currAdvice.title}</h5>
             <button type='button' className='close' aria-label='Close' onClick={props.onCancel}>
               <span aria-hidden='true'>&times;</span>
             </button>
           </div>
           <div className='modal-body'>
-            <div>Our information indicates that you have not yet set aside some savings for <b>emergency expenses</b>,
-            such as loss of employment, car trouble or medical emergencies.</div>
-            <br />
-            <div>
-              We recommend setting aside <b>3-6 months of expenses</b> as a <b>'rainy day'</b> fund in a low-risk location.
-              Remember that risky investments often require a long time in the market, and this is money you might need tomorrow.
-              Start by saving any amount you can - any contribution matters!
-            </div>
+            {currAdvice.paragraphs}
+            <p>If you believe you shuold not get this advice, please <Link to='/survey'>update</Link> your information</p>
             <br />
             <h5>Useful Links</h5>
             <div>
-              <a href='https://www.wellsfargo.com/financial-education/basic-finances/manage-money/cashflow-savings/emergencies/'>Saving for an Emergency</a><br />
-              <a href='https://learnvest.com/article/how-much-should-i-save-in-an-emergency-fund'>How Much Should I Save in an Emergency Fund?</a>
+              <ul>
+                {currAdvice.usefulLinks.map(link => <li key={link.label}><a href={link.link}>{link.label}</a></li>)}
+              </ul>
             </div>
           </div>
           <div className='modal-footer'>
@@ -42,7 +41,8 @@ function TutorAdvice (props) {
 TutorAdvice.propTypes = {
   modalOpen: PropTypes.bool,
   onCancel: PropTypes.func.isRequired,
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  adviceName: PropTypes.string
 }
 
 // Retrieve data from store as props
