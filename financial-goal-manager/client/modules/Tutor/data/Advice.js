@@ -127,17 +127,50 @@ const advice = {
     title: 'High Interest Debt',
     paragraphs: [
       (<p key={'p1'}>
-        Our information indicates that you have some <b>high interest debt</b>, such as credit card, an auto loan or student loans.
+        Our information indicates that you have some <b>high interest debt</b>,
+        such as credit card, an auto loan or student loans.
+        No investment strategy pays off as well or is less risky than eliminating high interest debt.
+        Most credit cards charge high interest rates -- as much as 18% or more
+        - if you don’t pay off your balance in full each month.
       </p>),
       (<p key={'p2'}>
-        No investment strategy pays off as well or is less risky than eliminating high interest debt.
-        Most credit cards charge high interest rates -- as much as 18% or more - if you don’t pay off your balance in full each month.
+        You might have been told that saving for retirement is the most important thing you can do
+        for your finances. This is the only case where that is not true.
+        Generally, if you’re paying more interest than you’re earning in interest, you’re losing money.
+        Let's look at the numbers: The stock market has an average historical return rate of 7%.
+        However, high-interest debt has a negative rate of return.
+        If you have $100 in debt with 15% interest, ivesting it might get you $7 at the end of the year,
+        but not paying it down will <strong>cost</strong> you $15 every <strong>month</strong>.
+      </p>),
+      (<p key={'p3'}>
+        There are two popular methods for eliminating high-interest debt:
+        the <strong>snowball</strong> method and the <strong>avalanche</strong> method.
+        With the avalanche method, you make the minimum payments on all your debts, and put any leftover money
+        into the debt with the highest interest rate. When that debt is eliminated, move onto the next debt.
+        With the snowball method, you would pay the minimum payments on all your debts, and put any leftover money
+        into paying beyond the minimum payment.
       </p>)
     ],
     usefulLinks: [
       {
+        link: 'https://www.nbcnews.com/better/business/how-debt-avalanche-method-helped-one-woman-pay-68-000-ncna881356',
+        label: 'How to pay off your loans using the \'debt avalanche\' method'
+      },
+      {
         link: 'https://www.cnbc.com/2017/09/13/how-much-americans-at-have-in-their-savings-accounts.html',
         label: 'Here\'s how much money Americans have in their savings accounts'
+      },
+      {
+        link: 'https://www.bankrate.com/banking/savings/these-guidelines-will-help-you-decide-whether-to-pay-down-debt-or-save/',
+        label: 'Should you pay debts first or save? Use these guidelines to decide'
+      },
+      {
+        link: 'http://time.com/money/collection-post/2791960/which-debts-should-i-pay-off-first/',
+        label: 'Which Debts Should I Pay Off First?'
+      },
+      {
+        link: 'https://www.forbes.com/sites/nancyanderson/2013/10/11/when-not-to-pay-off-your-high-interest-credit-card-debt/#297f7e8f136a',
+        label: 'When Not To Pay Off Your High-Interest Credit Card Debt'
       }
     ]
   }
