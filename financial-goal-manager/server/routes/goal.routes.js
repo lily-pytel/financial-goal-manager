@@ -11,6 +11,9 @@ router.route('/goals/:cuid').get(GoalController.getGoal)
 // Add a new Goal
 router.route('/goals/add').post(GoalController.addGoal)
 
+// Add a new Goal
+router.route('/goals/edit').post(GoalController.editGoal)
+
 // Add progress to a Goal
 router.route('/goals/progress/add/:cuid').post(GoalController.addProgress)
 

@@ -155,7 +155,7 @@ class GoalDetailsPage extends Component {
   }
 
   render () {
-    const { goal, progressAdded } = this.props
+    const { goal, progressAdded, progressDeleted } = this.props
     const { pendingProgress } = this.state
 
     if (!goal) {
@@ -188,9 +188,20 @@ class GoalDetailsPage extends Component {
             </tr>
           </thead>
           <tbody>
-            {goal.progress.filter(row => row && row[0]).map(row => this.renderProgressRow(row[0]))}
+            {goal.progress
+              .filter(row => row && row[0])
+              .map(row => row[0])
+              .sort((a, b) => {
+                const dateA = new Date(a.date)
+                const dateB = new Date(b.date)
+                return dateA > dateB ? -1 : dateA < dateB ? 1 : 0
+              })
+              .map(row => this.renderProgressRow(row))}
           </tbody>
         </table>
+        {progressDeleted && <div className='alert alert-success' role='alert'>
+          Progress deleted. Please refresh the page to see it.
+        </div>}
         <div className='card'>
           <div className='card-body'>
             <h5 className='card-title'>Add Progress</h5>
@@ -250,6 +261,7 @@ class GoalDetailsPage extends Component {
 function mapStateToProps (state, existingProps) {
   return {
     progressAdded: state.goals.progressAdded,
+    progressDeleted: state.goals.progressDeleted,
     goal: getGoal(state, existingProps.params.id)
   }
 }

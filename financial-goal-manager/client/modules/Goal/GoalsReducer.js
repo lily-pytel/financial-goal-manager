@@ -1,7 +1,7 @@
 import { LOAD_GOALS, ADD_GOAL, ADD_PROGRESS, DELETE_GOAL, DELETE_PROGRESS } from './GoalsActions'
 
 // Initial State
-const initialState = { data: [], progressAdded: null }
+const initialState = { data: [], progressAdded: null, progressDeleted: null }
 
 const GoalReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -14,7 +14,9 @@ const GoalReducer = (state = initialState, action) => {
       const newGoals = [action.goal, ...state.data]
       let sortedNewGoals = newGoals.sort((a, b) => a.name.localeCompare(b.name))
       return {
-        data: sortedNewGoals
+        data: sortedNewGoals,
+        progressAdded: false,
+        progressDeleted: false
       }
 
     case ADD_PROGRESS :
@@ -28,8 +30,9 @@ const GoalReducer = (state = initialState, action) => {
         newGoalsAddProgress = newGoalsAddProgress.sort((a, b) => a.name.localeCompare(b.name))
 
         return {
+          data: newGoalsAddProgress,
           progressAdded: true,
-          data: newGoalsAddProgress
+          progressDeleted: false
         }
       }
 
@@ -37,18 +40,27 @@ const GoalReducer = (state = initialState, action) => {
 
     case DELETE_GOAL :
       return {
-        data: state.data.filter(goal => goal._id !== action.cuid)
+        data: state.data.filter(goal => goal._id !== action.cuid),
+        progressAdded: false,
+        progressDeleted: false
       }
 
     case DELETE_PROGRESS :
-      const goalToDelete = state.data.find(goal => goal._id === action.cuid)
+      let newGoalsDeleteProgress = state.data.filter(goal => goal._id !== action.cuid)
+      const goalWithProgressToDelete = state.data.find(goal => goal._id === action.cuid)
 
-      if (goalToDelete) {
-        goalToDelete.progress = goalToDelete.progress
-          .filter(entry => entry.date !== action.date && entry.value !== action.value)
+      if (goalWithProgressToDelete) {
+        goalWithProgressToDelete.progress = goalWithProgressToDelete.progress
+          .filter(entry => entry && entry[0])
+          .filter(entry => entry[0].date !== action.date && entry[0].value !== action.value)
+
+        newGoalsDeleteProgress.push(goalWithProgressToDelete)
+        newGoalsDeleteProgress = newGoalsDeleteProgress.sort((a, b) => a.name.localeCompare(b.name))
 
         return {
-          data: [...state.data]
+          data: newGoalsDeleteProgress,
+          progressAdded: false,
+          progressDeleted: true
         }
       }
 

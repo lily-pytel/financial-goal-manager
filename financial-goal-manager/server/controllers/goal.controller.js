@@ -78,6 +78,32 @@ export function deleteGoal (req, res) {
   })
 }
 
+export function editGoal (req, res) {
+  Goal.findOne({ _id: req.params.cuid }).exec((err, goal) => {
+    if (err) {
+      res.status(500).send(err)
+      return
+    }
+
+    goal.remove(() => {
+      const newGoal = new Goal(req.body.goal)
+
+      // Let's sanitize inputs
+      newGoal.name = sanitizeHtml(newGoal.name)
+      newGoal.description = sanitizeHtml(newGoal.description)
+
+      newGoal.slug = slug(newGoal.name.toLowerCase(), { lowercase: true })
+      newGoal.cuid = cuid()
+      newGoal.save((err, saved) => {
+        if (err) {
+          res.status(500).send(err)
+        }
+        res.json({ goal: saved })
+      })
+    })
+  })
+}
+
 export function addProgress (req, res) {
   const { params: { cuid }, body: { progress } } = req
 
@@ -105,7 +131,10 @@ export function deleteProgress (req, res) {
       res.status(500).send(err)
     }
 
-    goal.progress = goal.progress.filter(entry => entry.date !== progress.date && entry.value !== progress.value)
+    goal.progress = goal.progress
+      .filter(entry => entry && entry[0])
+      .map(entry => entry[0])
+      .filter(entry => entry.date !== progress.date && entry.value !== progress.value)
     goal.save((err, saved) => {
       if (err) {
         res.status(500).send(err)
