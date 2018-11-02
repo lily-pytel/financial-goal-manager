@@ -132,6 +132,7 @@ class PersonalFinanceSurveyPage extends Component {
               <label>
                 <b>Do you have emergency savings?</b><br />
                 {this.renderRadioQuestion('emergencySavings', [
+                  { value: 'tooMuch', label: 'Yes, more than 6 months of expenses' },
                   { value: 'full', label: 'Yes, 3-6 months of expenses' },
                   { value: 'partial', label: 'Yes, 1-2 months of expenses' },
                   { value: 'perliminary', label: 'Yes, less than 1 month of expenses' },
