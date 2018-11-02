@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import advice from '../data/advice'
+import advice from '../data/Advice'
 
 function TutorAdvice (props) {
   const { modalOpen, adviceName } = props
