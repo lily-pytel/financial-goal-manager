@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
-import NewGoal from './NewGoal'
+import { openGoalModal } from '../GoalsActions'
 import TutorAdvice from '../../Tutor/components/TutorAdvice'
 
 class GoalCreatorButton extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      goalModalOpen: false,
       tutorModalOpen: false
     }
   }
@@ -21,7 +22,8 @@ class GoalCreatorButton extends Component {
   }
 
   render () {
-    const { goalModalOpen, tutorModalOpen } = this.state
+    const { dispatch } = this.props
+    const { tutorModalOpen } = this.state
 
     return (
       <div>
@@ -29,7 +31,7 @@ class GoalCreatorButton extends Component {
           <div className='col'>
             <button
               className='btn btn-primary btn-sm'
-              onClick={() => this.setModalStatus('goalModalOpen', true)}
+              onClick={() => dispatch(openGoalModal())}
             >
               Create a goal
             </button>
@@ -43,11 +45,6 @@ class GoalCreatorButton extends Component {
             </button>
           </div>
         </div>
-        <NewGoal
-          modalOpen={goalModalOpen}
-          onSubmit={() => {}}
-          onCancel={() => this.setModalStatus('goalModalOpen', false)}
-        />
         <TutorAdvice
           adviceName={'moreWealth'}
           modalOpen={tutorModalOpen}
@@ -59,4 +56,13 @@ class GoalCreatorButton extends Component {
   }
 }
 
-export default GoalCreatorButton
+GoalCreatorButton.propTypes = {
+  dispatch: PropTypes.func.isRequired
+}
+
+// Retrieve data from store as props
+function mapStateToProps (state) {
+  return {}
+}
+
+export default connect(mapStateToProps)(GoalCreatorButton)

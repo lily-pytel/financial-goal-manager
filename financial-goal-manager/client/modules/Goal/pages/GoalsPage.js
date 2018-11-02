@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 // Import Components
 import Goals from '../components/Goals'
+import NewGoal from '../components/NewGoal'
 import GoalCreatorButton from '../components/GoalCreatorButton'
 
 // Import Selectors
@@ -28,6 +29,7 @@ class GoalsPage extends Component {
       <div>
         <Goals goals={this.props.goals} />
         <GoalCreatorButton />
+        <NewGoal />
       </div>
     )
   }

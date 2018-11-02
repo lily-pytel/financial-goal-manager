@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Select from 'react-select'
 
-import { addGoalRequest } from '../GoalsActions'
+import { addGoalRequest, closeGoalModal } from '../GoalsActions'
 
 class NewGoal extends Component {
   constructor (props) {
@@ -39,7 +39,7 @@ class NewGoal extends Component {
 
   saveGoal () {
     const { selectedOption, years, description } = this.state
-    const { dispatch, onCancel } = this.props
+    const { dispatch } = this.props
     const goal = {
       name: selectedOption.label,
       type: selectedOption.value,
@@ -50,7 +50,7 @@ class NewGoal extends Component {
     }
 
     dispatch(addGoalRequest(goal))
-    onCancel()
+    dispatch(closeGoalModal())
   }
 
   enterYearAmount (event, item) {
@@ -138,15 +138,15 @@ class NewGoal extends Component {
 
   render () {
     const { years, selectedOption, description } = this.state
-    const { modalOpen, onCancel } = this.props
+    const { goalModalOpen, dispatch } = this.props
 
     return (
-      <div className='modal' tabIndex='-1' role='dialog' style={{ display: modalOpen ? 'block' : 'none' }}>
+      <div className='modal' tabIndex='-1' role='dialog' style={{ display: goalModalOpen ? 'block' : 'none' }}>
         <div className='modal-dialog' role='document'>
           <div className='modal-content'>
             <div className='modal-header'>
               <h4 className='modal-title'>Create a Goal</h4>
-              <button type='button' className='close' aria-label='Close' onClick={onCancel}>
+              <button type='button' className='close' aria-label='Close' onClick={() => dispatch(closeGoalModal())}>
                 <span aria-hidden='true'>&times;</span>
               </button>
             </div>
@@ -217,7 +217,7 @@ class NewGoal extends Component {
               >
                 Submit
               </button>
-              <button type='button' className='btn btn-sm btn-secondary' onClick={onCancel}>Close</button>
+              <button type='button' className='btn btn-sm btn-secondary' onClick={() => dispatch(closeGoalModal())}>Close</button>
             </div>
           </div>
         </div>
@@ -227,14 +227,15 @@ class NewGoal extends Component {
 }
 
 NewGoal.propTypes = {
-  modalOpen: PropTypes.bool,
-  onCancel: PropTypes.func.isRequired,
   dispatch: PropTypes.func.isRequired
 }
 
 // Retrieve data from store as props
 function mapStateToProps (state) {
-  return {}
+  return {
+    goalModalOpen: state.goals.goalModalOpen,
+    goalToEdit: state.goals.goalToEdit
+  }
 }
 
 export default connect(mapStateToProps)(NewGoal)

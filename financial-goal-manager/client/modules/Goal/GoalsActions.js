@@ -6,8 +6,23 @@ export const ADD_GOAL = 'ADD_GOAL'
 export const ADD_PROGRESS = 'ADD_PROGRESS'
 export const DELETE_GOAL = 'DELETE_GOAL'
 export const DELETE_PROGRESS = 'DELETE_PROGRESS'
+export const OPEN_GOAL_MODAL = 'OPEN_GOAL_MODAL'
+export const CLOSE_GOAL_MODAL = 'CLOSE_GOAL_MODAL'
 
 // Export Actions
+export function openGoalModal (goal) {
+  return {
+    type: OPEN_GOAL_MODAL,
+    goal
+  }
+}
+
+export function closeGoalModal () {
+  return {
+    type: CLOSE_GOAL_MODAL
+  }
+}
+
 export function addGoal (goal) {
   return {
     type: ADD_GOAL,

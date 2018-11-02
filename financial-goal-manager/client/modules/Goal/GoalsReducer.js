@@ -1,10 +1,38 @@
-import { LOAD_GOALS, ADD_GOAL, ADD_PROGRESS, DELETE_GOAL, DELETE_PROGRESS } from './GoalsActions'
+import {
+  LOAD_GOALS,
+  ADD_GOAL,
+  ADD_PROGRESS,
+  DELETE_GOAL,
+  DELETE_PROGRESS,
+  OPEN_GOAL_MODAL,
+  CLOSE_GOAL_MODAL
+} from './GoalsActions'
 
 // Initial State
-const initialState = { data: [], progressAdded: null, progressDeleted: null }
+const initialState = {
+  data: [],
+  progressAdded: null,
+  progressDeleted: null,
+  goalModalOpen: false,
+  goalToEdit: null
+}
 
 const GoalReducer = (state = initialState, action) => {
   switch (action.type) {
+    case OPEN_GOAL_MODAL :
+      return {
+        ...state,
+        goalModalOpen: true,
+        goalToEdit: action.goalToEdit
+      }
+
+    case CLOSE_GOAL_MODAL :
+      return {
+        ...state,
+        goalModalOpen: false,
+        goalToEdit: null
+      }
+
     case LOAD_GOALS :
       return {
         data: action.goals.sort((a, b) => a.name.localeCompare(b.name))
