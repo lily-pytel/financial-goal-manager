@@ -55,7 +55,14 @@ function Goals (props) {
     const progressesForCurrentYearOrBefore = allProgressess
       .map(p => p.filter(entry => new Date(entry[0].date).getFullYear() === year))
     const totalProgress = progressesForCurrentYearOrBefore
-      .map(p => p.reduce((acc, curr) => acc + curr[0].value, 0))
+      .map(p => {
+        const sortedProgress = p.sort((a, b) => {
+          const dateA = new Date(a[0].date)
+          const dateB = new Date(b[0].date)
+          return dateA > dateB ? -1 : dateA < dateB ? 1 : 0
+        })
+        return (sortedProgress && sortedProgress.length && sortedProgress[0][0].value) || 0
+      })
       .reduce((acc, current) => acc + current, 0)
 
     return totalProgress
