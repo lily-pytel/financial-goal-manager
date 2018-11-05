@@ -51,18 +51,11 @@ function Goals (props) {
   })
 
   const goalProgress = years.map(year => {
-    const totalProgress = goals
-      .map(g => g.progress)
-      .map(g => {
-        const goalsPerYear = g.find(y => new Date(y[0].date).getFullYear() === year)
-        const totalAmount = goalsPerYear
-          ? goalsPerYear.reduce((acc, current) => {
-            const currVal = (current && current.value) || 0
-            return acc + currVal
-          }, 0)
-          : 0
-        return totalAmount
-      })
+    const allProgressess = goals.map(g => g.progress)
+    const progressesForCurrentYearOrBefore = allProgressess
+      .map(p => p.filter(entry => new Date(entry[0].date).getFullYear() === year))
+    const totalProgress = progressesForCurrentYearOrBefore
+      .map(p => p.reduce((acc, curr) => acc + curr[0].value, 0))
       .reduce((acc, current) => acc + current, 0)
 
     return totalProgress

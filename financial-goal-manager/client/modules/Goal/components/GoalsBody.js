@@ -19,11 +19,9 @@ class GoalsBody extends Component {
               <td>{goal.description}</td>
               {years.map(year => {
                 const yearGoal = goal.years.find(gy => gy[0].year === year)
-                const yearProgress = goal.progress.filter(gp => {
-                  const progressYear = new Date(gp[0].date).getFullYear()
-                  return progressYear === year
-                })
-                const totalProgress = yearProgress.reduce((acc, current) => acc + current[0].value, 0)
+                const totalProgress = goal.progress
+                  .filter(gp => new Date(gp[0].date).getFullYear() === year)
+                  .reduce((acc, current) => acc + current[0].value, 0)
 
                 return [
                   <td key={`inner${year}goal`}>{yearGoal && yearGoal[0] && yearGoal[0].value}</td>,
