@@ -166,8 +166,8 @@ class PersonalFinanceSurveyPage extends Component {
                 <b>What kind of retirement does your employer offer?</b><br />
                 {this.renderRadioQuestion('retirementJob', [
                   { value: 'pension', label: 'Pension' },
-                  { value: '401k-match', label: 'Matched 401k' },
-                  { value: '401k-no-match', label: 'Unmatched 401k' },
+                  { value: '401k-match', label: 'Matched 401(k)' },
+                  { value: '401k-no-match', label: 'Unmatched 401(k)' },
                   { value: 'none', label: 'None' }
                 ])}
               </label>
@@ -178,7 +178,7 @@ class PersonalFinanceSurveyPage extends Component {
               <label>
                 <b>Do you contribute to your retirement plan? If so, with how much?</b><br />
                 {this.renderRadioQuestion('retirementContribution', [
-                  { value: 'max', label: 'Maximum allowed by law ($18.5k a year for 401k and 5.5k for IRA)' },
+                  { value: 'max', label: 'Maximum allowed by law ($18.5k a year for 401(k) and 5.5k for IRA)' },
                   { value: 'full', label: 'More than 20% of my salary' },
                   { value: 'partial', label: 'Between 10% and 20% of my salary' },
                   { value: 'perliminary', label: 'Under 10% of my salary' },
