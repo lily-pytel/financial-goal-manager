@@ -60,6 +60,8 @@ const advice = [
     paragraphs: [
       (<p key={'p1'}>
         Based on our information, you hold a lot of savings in <strong>cash</strong>.
+      </p>),
+      (<p key={'p2'}>
         Unlike our other pieces of advice, this one should be taken with a grain of salt and depends on factors
         such as the state of the <strong>financial market</strong>, your age, your <strong>risk tolerance</strong>
         and your ability to hold your investments during a <strong>market downturn</strong>. While the stock market
@@ -67,7 +69,7 @@ const advice = [
         Our goal is to help you make an informed decision, so our useful links will include articles that encourage
         cash savings, as well as articles that discourage holding too much of your savings in cash.
       </p>),
-      (<p key={'p2'}>
+      (<p key={'p3'}>
         Holding too much money in cash that earns less than 1% in interest may prevent you from building wealth
         and retiring comfortably. Historically, the stock market has earned an <strong>average</strong> of 7% yearly returns.
         The word average here is important - some years the market can go down tens of percents, while another year it might
@@ -77,7 +79,7 @@ const advice = [
         Investments can be done automatically through tools like <a href='https://www.betterment.com/'>Betterment</a> or you can choose your own stocks by opening
         a brokerage account from with one of <a href='https://www.nerdwallet.com/blog/investing/best-online-brokers-for-stock-trading/'>these</a> institutions.
       </p>),
-      (<p key={'p3'}>
+      (<p key={'p4'}>
         Building wealth is the least straightforward decision out of all the advice we could give you.
         We recommend getting informed before making risky investments in individual stocks.
         There is nothing wrong with sticking to simple investments like the <strong>S&P 500</strong>,
@@ -156,6 +158,45 @@ const advice = [
     }, {
       link: 'https://www.cnbc.com/2017/09/13/how-much-americans-at-have-in-their-savings-accounts.html',
       label: 'Here\'s how much money Americans have in their savings accounts'
+    }]
+  }, {
+    key: 'noRetirementMatch401kOffered',
+    title: 'Contributing to a Matched 401(k)',
+    paragraphs: [
+      (<p key={'p1'}>
+        Our information indicates that your employer offers a <b>401(k)</b> with a match,
+        but you do not participate. We also see that you have emergency savings and no
+        high interest debt.
+      </p>),
+      (<p key={'p2'}>
+        An employer match is a guaranteed return on your investment. It's <strong>free money</strong>!
+        No other investment will offer a similar guarantee, so we recommend contributing at least
+        enough to your 401(k) to get the full match. Bonus: your contributions are tax free
+        (though you will be taxed when you withdraw them during retirement).
+      </p>),
+      (<p key={'p3'}>
+        In 2018, the most you can contribute to a 401(k) is <strong>$18,500</strong>.
+        It increases to $24,500 if you’re 50 or older.
+        Whatever your employer matches is not included in this limit.
+        If you contributed $18,500 to a 401(k) each year for <strong>35 years</strong> and got a 6% average annual return,
+        you’d have around <strong>$2.2 million</strong>. Your employer match would add to that total.
+        How much money you’ll need in retirement depends on when you plan to retire,
+        your desired income during retirement (don't forget to take into account inflation and healtchcare costs)
+        and your confidence in the Social Security system.
+      </p>)
+    ],
+    usefulLinks: [{
+      link: 'https://www.investopedia.com/articles/personal-finance/112315/how-401k-matching-works.asp',
+      label: 'How 401(k) Matching Works?'
+    }, {
+      link: 'https://www.nerdwallet.com/blog/investing/how-much-should-i-contribute-to-a-401k/',
+      label: 'How Much Should I Contribute to a 401(k)?'
+    }, {
+      link: 'https://www.nerdwallet.com/blog/investing/contribute-company-401k/',
+      label: 'Yes, You Need a 401(k) in Your 20s — Here’s Why'
+    }, {
+      link: 'http://www.401khelpcenter.com/401k_education/10_reasons_to_join_your_401k.html#.W9-FA2hKiUk',
+      label: 'Top 10 Reasons to Join Your 401k Plan'
     }]
   }]
 
