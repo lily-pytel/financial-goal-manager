@@ -62,7 +62,7 @@ class TutorAdvice extends Component {
 
     return (
       <div className='modal' tabIndex='-1' role='dialog' style={{ display: modalOpen ? 'block' : 'none' }}>
-        <div className='modal-dialog' role='document' style={{ maxWidth: '600px' }}>
+        <div className='modal-dialog' role='document' style={{ maxWidth: '800px' }}>
           <div className='modal-content'>
             <div className='modal-header'>
               <h5 className='modal-title'>{currAdvice.title}</h5>
@@ -71,9 +71,11 @@ class TutorAdvice extends Component {
               </button>
             </div>
             <div className='modal-body'>
-              <div className='advice-body' style={{ maxHeight: '450px', overflow: 'auto', marginBottom: '15px' }}>
+              <div className='advice-body' style={{ maxHeight: '300px', overflow: 'auto', marginBottom: '15px' }}>
                 {currAdvice.paragraphs}
-                <p>If you believe you shuold not get this advice, please <Link to='/survey'>update</Link> your information</p>
+                {!currAdvice.lastAdvice &&
+                  <p>If you believe you shuold not get this advice, please <Link to='/survey'>update</Link> your information</p>
+                }
                 <br />
               </div>
               <div className='userful-links' style={{ borderTop: '1px solid #e9ecef', paddingTop: '15px' }}>

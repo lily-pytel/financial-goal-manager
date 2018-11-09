@@ -6,6 +6,9 @@ import { connect } from 'react-redux'
 import { getUser } from '../UsersReducer'
 import { fetchUser, addUserRequest, dismissUpdateMessage } from '../UsersActions'
 
+// Import Styles
+import styles from './PersonalFinanceSurveyPage.css'
+
 class PersonalFinanceSurveyPage extends Component {
   componentWillMount () {
     this.onChangeRadio = this.onChangeRadio.bind(this)
@@ -55,8 +58,10 @@ class PersonalFinanceSurveyPage extends Component {
 
       return (
         <div key={name + c.value}>
-          <input type='radio' name={name} onChange={this.onChangeRadio} value={c.value} checked={checked} />
-          &nbsp;&nbsp;{c.label}
+          <label htmlFor={name + c.value}>
+            <input id={name + c.value} type='radio' name={name} onChange={this.onChangeRadio} value={c.value} checked={checked} />
+            &nbsp;&nbsp;{c.label}
+          </label>
         </div>
       )
     })
@@ -76,8 +81,10 @@ class PersonalFinanceSurveyPage extends Component {
 
       return (
         <div key={name + c.value}>
-          <input type='checkbox' name={name} onChange={this.onChangeRadio} value={c.value} checked={checked} />
-          &nbsp;&nbsp;{c.label}
+          <label htmlFor={name + c.value}>
+            <input id={name + c.value} type='checkbox' name={name} onChange={this.onChangeRadio} value={c.value} checked={checked} />
+            &nbsp;&nbsp;{c.label}
+          </label>
         </div>
       )
     })
@@ -87,14 +94,6 @@ class PersonalFinanceSurveyPage extends Component {
 
   render () {
     const { dispatch, userSaved } = this.props
-    const titleStyle = {
-      backgroundColor: '#e9ecef',
-      padding: '8px 5px',
-      marginBottom: '10px',
-      textTransform: 'uppercase',
-      fontWeight: 'bold',
-      fontSize: '18px'
-    }
 
     return (
       <div className='container'>
@@ -111,7 +110,7 @@ class PersonalFinanceSurveyPage extends Component {
             </div>
           </div>
         </div>
-        <div style={titleStyle}>Personal Information</div>
+        <div className={styles.sectionTitle}>Personal Information</div>
         <div className='row'>
           <div className='col'>
             <div className='form-group'>
@@ -123,9 +122,38 @@ class PersonalFinanceSurveyPage extends Component {
               </label>
             </div>
           </div>
+          <div className='col'>
+            <div className='form-group'>
+              <label>
+                <b>How do you feel about investments?</b><br />
+                {this.renderRadioQuestion('riskTolerance', [
+                  { value: 'none', label: 'They are too risky' },
+                  { value: 'cautious', label: 'They make me nervous, but they are important' },
+                  { value: 'normal', label: 'They are a necessary part of building wealth' },
+                  { value: 'adventurous', label: 'The riskier, the better' }
+                ])}
+              </label>
+            </div>
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col'>
+            <div className='form-group'>
+              <label>
+                <b>How do you feel about debt?</b><br />
+                {this.renderRadioQuestion('debtTolerance', [
+                  { value: 'none', label: 'I hate debt and strive to be debt-free at all costs' },
+                  { value: 'cautious', label: 'It makes me uncomfortable but it\'s inevitable' },
+                  { value: 'normal', label: 'I am comfortable with having a small amount of dect' },
+                  { value: 'adventurous', label: 'I am comfortable with debt' }
+                ])}
+              </label>
+            </div>
+          </div>
+          <div className='col' />
         </div>
 
-        <div style={titleStyle}>Savings and Debt</div>
+        <div className={styles.sectionTitle}>Savings and Debt</div>
         <div className='row'>
           <div className='col'>
             <div className='form-group'>
@@ -158,7 +186,7 @@ class PersonalFinanceSurveyPage extends Component {
           </div>
         </div>
 
-        <div style={titleStyle}>Retirement</div>
+        <div className={styles.sectionTitle}>Retirement</div>
         <div className='row'>
           <div className='col'>
             <div className='form-group'>
@@ -189,7 +217,7 @@ class PersonalFinanceSurveyPage extends Component {
           </div>
         </div>
 
-        <div style={titleStyle}>Investments</div>
+        <div className={styles.sectionTitle}>Investments</div>
         <div className='row'>
           <div className='col'>
             <div className='form-group'>
