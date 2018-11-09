@@ -9,6 +9,8 @@ const userSchema = new Schema({
   retirementContribution: { type: 'String' },
   retirementInvestment: { type: 'String' },
   investment: { type: 'String' },
+  riskTolerance: { type: 'String' },
+  debtTolerance: { type: 'String' },
   Dateupdated: { type: 'Date', default: Date.now }
 })
 
