@@ -7,26 +7,31 @@ module.exports = {
 
   output: {
     path: __dirname + '/dist/',
-    filename: 'server.bundle.js',
+    filename: 'server.bundle.js'
   },
 
   target: 'node',
 
   node: {
     __filename: true,
-    __dirname: true,
+    __dirname: true
   },
 
   resolve: {
     extensions: ['.js', '.jsx'],
     modules: [
       'client',
-      'node_modules',
-    ],
+      'node_modules'
+    ]
   },
 
   module: {
     rules: [
+      {
+        test: /\.css$/,
+        include: /node_modules/,
+        use: ['style-loader', 'css-loader']
+      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -36,26 +41,26 @@ module.exports = {
             presets: [
               'react',
               'es2015',
-              'stage-0',
+              'stage-0'
             ],
             plugins: [
               [
                 'babel-plugin-webpack-loaders', {
                   config: './webpack.config.babel.js',
-                  verbose: false,
-                },
-              ],
-            ],
-          },
-        },
-      },
-    ],
+                  verbose: false
+                }
+              ]
+            ]
+          }
+        }
+      }
+    ]
   },
 
   plugins: [
     new ExternalsPlugin({
       type: 'commonjs',
-      include: path.join(__dirname, 'node_modules'),
-    }),
-  ],
-};
+      include: path.join(__dirname, 'node_modules')
+    })
+  ]
+}

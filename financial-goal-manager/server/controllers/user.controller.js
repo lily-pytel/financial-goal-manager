@@ -25,7 +25,6 @@ export function getUsers (req, res) {
 export function updateUser (req, res) {
   console.log('1')
   User.remove({}, err => {
-
     if (err) {
       console.log(err)
       res.status(500).send(err)
@@ -36,7 +35,6 @@ export function updateUser (req, res) {
     console.log(req.body)
     newUser.cuid = cuid()
     newUser.save((err, saved) => {
-
       if (err) {
         console.log(err)
         res.status(500).send(err)
