@@ -179,6 +179,8 @@ class PersonalFinanceSurveyPage extends Component {
                   { value: 'car-cheap', label: 'Car Loan with interest rate lower than 3%' },
                   { value: 'house', label: 'Mortgage' },
                   { value: 'cc', label: 'Credit Card' },
+                  { value: 'loan', label: 'Loan (Personal, from Family, etc.)' },
+                  { value: 'other', label: 'Other' },
                   { value: 'none', label: 'None' }
                 ])}
               </label>

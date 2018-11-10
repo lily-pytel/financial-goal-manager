@@ -10,13 +10,13 @@ const dropdownOptions = [
   { value: 'emergency', label: 'Save for emergency' },
   { value: 'salary', label: 'Save part of salary' },
   { value: 'salary', label: 'Save part of bonus' },
-  { value: 'retirement401k', label: 'Retirement: Contribute to 401(k)' },
-  { value: 'retirementIRA', label: 'Retirement: Contribute to IRA' },
-  { value: 'creditCard', label: 'Debt: Pay Off Credit Card' },
-  { value: 'largePurchage', label: 'Debt: Pay Off Large Purchase' },
-  { value: 'car', label: 'Debt: Pay Off Car' },
-  { value: 'mortgage', label: 'Debt: Pay Off Mortgage' },
-  { value: 'studentLoan', label: 'Debt: Pay Off Student Loans' },
+  { value: 'retirement-401k', label: 'Retirement: Contribute to 401(k)' },
+  { value: 'retirement-IRA', label: 'Retirement: Contribute to IRA' },
+  { value: 'cc', label: 'Debt: Pay Off Credit Card' },
+  { value: 'car-expensive', label: 'Debt: Pay Off Car (High Interest Loan)' },
+  { value: 'car-cheap', label: 'Debt: Pay Off Car (Low Interest Loan)' },
+  { value: 'house', label: 'Debt: Pay Off Mortgage' },
+  { value: 'student', label: 'Debt: Pay Off Student Loans' },
   { value: 'loan', label: 'Debt: Pay Off Loan' },
   { value: 'other', label: 'Other' }
 ]
@@ -34,6 +34,7 @@ class GoalModal extends Component {
       selectedOption: selectedOption,
       selectedType: null,
       description: goalToEdit && goalToEdit.description,
+      updateSurvey: true,
       years: [{
         year: currentYear,
         value: ''
@@ -48,7 +49,7 @@ class GoalModal extends Component {
   }
 
   componentWillMount () {
-    this.renderOptionsDropdown = this.renderOptionsDropdown.bind(this)
+    this.renderGoalName = this.renderGoalName.bind(this)
     this.renderRadio = this.renderRadio.bind(this)
     this.enterYearAmount = this.enterYearAmount.bind(this)
     this.addYear = this.addYear.bind(this)
@@ -143,10 +144,11 @@ class GoalModal extends Component {
     this.setState({ years: newYears })
   }
 
-  renderOptionsDropdown () {
+  renderGoalName () {
+    const { updateSurvey } = this.state
     return (
       <div className='form-group'>
-        <h5>Goal Name</h5>
+        <h6>Goal Name</h6>
         <Select
           placeholder='Type to search'
           style={{ width: '100%' }}
@@ -156,6 +158,12 @@ class GoalModal extends Component {
           }}
           options={dropdownOptions}
         />
+        <label style={{ marginTop: '10px' }}>
+          <input type='checkbox' checked={updateSurvey} onChange={(event) => {
+            this.setState({ updateSurvey: event.target.checked })
+          }} />
+          Update Survey
+        </label>
         <hr />
       </div>
     )
@@ -176,7 +184,7 @@ class GoalModal extends Component {
     return (
       <div className='form-group'>
         <label htmlFor='placeholder'>
-          <h5>Goal Type</h5>
+          <h6>Goal Type</h6>
           <input type='radio' checked={selectedType === 'savings'} value='savings' onChange={onChange} /> Savings<br />
           <input type='radio' checked={selectedType === 'debt'} value='debt' onChange={onChange} /> Debt Reduction<br />
         </label>
@@ -200,9 +208,9 @@ class GoalModal extends Component {
               </button>
             </div>
             <div className='modal-body'>
-              {this.renderOptionsDropdown()}
+              {this.renderGoalName()}
               <div className='form-group'>
-                <h5>Description</h5>
+                <h6>Description</h6>
                 <input
                   type='text'
                   className='form-control form-control-sm'
@@ -214,7 +222,7 @@ class GoalModal extends Component {
               {this.renderRadio()}
               <div className={`form-group ${styles.goalYears}`}>
                 <label htmlFor='placeholder'>
-                  <h5>Goal Years</h5>
+                  <h6>Goal Years</h6>
                   <table className={`table table-bordered ${styles.yearsTable}`}>
                     <thead>
                       <tr>
