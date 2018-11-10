@@ -252,6 +252,13 @@ class PersonalFinanceSurveyPage extends Component {
         <div className='row'>
           <div className='col'>
             <button className='btn btn-primary' onClick={() => { dispatch(addUserRequest(this.state)) }}>Save</button>
+            <button
+              className='btn btn-secondary'
+              onClick={() => { dispatch(addUserRequest({})) }}
+              style={{ marginLeft: '5px' }}
+            >
+              Reset
+            </button>
           </div>
         </div>
 
