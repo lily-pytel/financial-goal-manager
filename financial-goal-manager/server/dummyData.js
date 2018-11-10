@@ -11,7 +11,8 @@ export default function () {
       {
         key: cuid(),
         name: 'Contribute to an IRA',
-        type: 'Retirement',
+        type: 'retirement-IRA',
+        complete: true,
         description: 'Reach the maximum contribution',
         years: [
           { year: 2019, value: 5500 },
@@ -27,7 +28,8 @@ export default function () {
       {
         key: cuid(),
         name: 'Build emergency savings',
-        type: 'Savings',
+        type: 'emergency',
+        complete: false,
         description: 'Build 3 months of expenses',
         years: [
           { year: 2019, value: 1000 },
@@ -43,7 +45,8 @@ export default function () {
       {
         key: cuid(),
         name: 'Save part of salary',
-        type: 'Wealth',
+        type: 'wealth',
+        complete: false,
         description: 'Save 10% of salary',
         years: [
           { year: 2019, value: 2000 },
@@ -59,7 +62,8 @@ export default function () {
       {
         key: cuid(),
         name: 'Save part of bonus',
-        type: 'Wealth',
+        type: 'wealth',
+        complete: false,
         description: 'Reach the maximum contribution',
         years: [
           { year: 2019, value: 3000 },

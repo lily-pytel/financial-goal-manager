@@ -4,6 +4,7 @@ const Schema = mongoose.Schema
 const goalSchema = new Schema({
   name: { type: 'String', required: true },
   type: { type: 'String', required: true },
+  complete: { type: 'Boolean' },
   description: { type: 'String', required: false },
   years: { type: 'Array', required: true },
   progress: { type: 'Array', required: false }
