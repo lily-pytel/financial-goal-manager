@@ -4,6 +4,7 @@ import ReactHighcharts from 'react-highcharts'
 import GoalsHeader from './GoalsHeader'
 import GoalsFooter from './GoalsFooter'
 import GoalsBody from './GoalsBody'
+import styles from './Goals.css'
 
 const config = {
   chart: {
@@ -78,7 +79,7 @@ function Goals (props) {
   return (
     <div>
       <ReactHighcharts config={config} />
-      <table className='table table-striped'>
+      <table className={`table table-striped ${styles.goalsTable}`}>
         <GoalsHeader years={years} />
         <GoalsBody years={years} goals={goals} />
         <GoalsFooter years={years} goalAmounts={goalAmounts} goalProgress={goalProgress} />

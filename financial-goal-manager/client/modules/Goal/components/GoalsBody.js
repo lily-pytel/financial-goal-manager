@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { FaPen, FaTrashAlt } from 'react-icons/fa'
+import styles from './Goals.css'
 
 import { deleteGoalequest, openGoalModal } from '../GoalsActions'
 
@@ -15,8 +16,10 @@ class GoalsBody extends Component {
         {goals.map(goal => {
           return (
             <tr key={goal._id}>
-              <th scope='row'><Link to={`/details/${goal._id}`} >{goal.name}</Link></th>
-              <td>{goal.description}</td>
+              <th scope='row' style={{ textAlign: 'left' }}>
+                <Link to={`/details/${goal._id}`} >{goal.name}</Link>
+              </th>
+              <td style={{ textAlign: 'left' }}>{goal.description}</td>
               {years.map(year => {
                 const yearGoal = goal.years.find(gy => gy[0].year === year)
                 const sortedProgress = goal.progress
@@ -28,19 +31,22 @@ class GoalsBody extends Component {
                     const dateB = new Date(b.date)
                     return dateA > dateB ? -1 : dateA < dateB ? 1 : 0
                   })
-                const lastProgress = sortedProgress && sortedProgress.length && sortedProgress[0].value
+                const lastProgress = sortedProgress && sortedProgress.length && sortedProgress[0].value &&
+                  sortedProgress[0].value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                const goalAmount = yearGoal && yearGoal[0] && yearGoal[0].value &&
+                  yearGoal[0].value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 
                 return [
-                  <td key={`inner${year}goal`}>{yearGoal && yearGoal[0] && yearGoal[0].value}</td>,
+                  <td key={`inner${year}goal`} className={styles.goalsProgress}>{goalAmount}</td>,
                   <td key={`inner${year}progress`}>{lastProgress !== 0 ? lastProgress : ''}</td>
                 ]
               })}
               <td>
-                <button className='btn btn-link' onClick={() => dispatch(openGoalModal(goal))}>
+                <button title='Edit' className='btn btn-link' onClick={() => dispatch(openGoalModal(goal))}>
                   <FaPen />
                 </button>
                 |
-                <button className='btn btn-link' onClick={() => dispatch(deleteGoalequest(goal._id))}>
+                <button title='Delete' className='btn btn-link' onClick={() => dispatch(deleteGoalequest(goal._id))}>
                   <FaTrashAlt />
                 </button>
               </td>

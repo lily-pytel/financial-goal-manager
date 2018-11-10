@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import styles from './Goals.css'
 
 function GoalsHeader (props) {
   const { years } = props
@@ -9,8 +10,8 @@ function GoalsHeader (props) {
   })
   const headerYearSecondary = years.map(year => {
     return [
-      <th scope='col' style={{ width: '100px' }} key={`yeargoal${year.year}`}>Goal</th>,
-      <th scope='col' style={{ width: '100px' }} key={`yearprogress${year.year}`}>Progress</th>
+      <th scope='col' className={styles.goalsProgress} key={`yeargoal${year.year}`}>Goal</th>,
+      <th scope='col' key={`yearprogress${year.year}`}>Progress</th>
     ]
   })
 
@@ -23,8 +24,8 @@ function GoalsHeader (props) {
         <th />
       </tr>
       <tr>
-        <th scope='col'>Name</th>
-        <th scope='col'>Description</th>
+        <th scope='col' style={{ textAlign: 'left' }}>Name</th>
+        <th scope='col' style={{ textAlign: 'left' }}>Description</th>
         {headerYearSecondary}
         <th />
       </tr>
