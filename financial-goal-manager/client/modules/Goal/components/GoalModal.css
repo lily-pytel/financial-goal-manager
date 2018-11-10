@@ -1,0 +1,16 @@
+.yearsTable th {
+  padding: 5px;
+}
+
+.yearsTable td {
+  padding: 5px;
+}
+
+.yearsTable td button {
+  padding: 0px;
+}
+
+.goalYears {
+  max-height: 210px;
+  overflow: auto;
+}

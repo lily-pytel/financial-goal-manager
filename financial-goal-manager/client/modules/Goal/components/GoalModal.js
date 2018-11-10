@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Select from 'react-select'
+import styles from './GoalModal.css'
 
 import { addGoalRequest, closeGoalModal } from '../GoalsActions'
 
@@ -9,8 +10,15 @@ const dropdownOptions = [
   { value: 'emergency', label: 'Save for emergency' },
   { value: 'salary', label: 'Save part of salary' },
   { value: 'salary', label: 'Save part of bonus' },
-  { value: 'retirement', label: 'Save for retirement' },
-  { value: 'debt', label: 'Pay off debt' }
+  { value: 'retirement401k', label: 'Retirement: Contribute to 401(k)' },
+  { value: 'retirementIRA', label: 'Retirement: Contribute to IRA' },
+  { value: 'creditCard', label: 'Debt: Pay Off Credit Card' },
+  { value: 'largePurchage', label: 'Debt: Pay Off Large Purchase' },
+  { value: 'car', label: 'Debt: Pay Off Car' },
+  { value: 'mortgage', label: 'Debt: Pay Off Mortgage' },
+  { value: 'studentLoan', label: 'Debt: Pay Off Student Loans' },
+  { value: 'loan', label: 'Debt: Pay Off Loan' },
+  { value: 'other', label: 'Other' }
 ]
 
 class GoalModal extends Component {
@@ -140,7 +148,7 @@ class GoalModal extends Component {
       <div className='form-group'>
         <h5>Goal Name</h5>
         <Select
-          className='input-sm'
+          placeholder='Type to search'
           style={{ width: '100%' }}
           value={this.state.selectedOption}
           onChange={(selectedOption) => {
@@ -201,12 +209,13 @@ class GoalModal extends Component {
                   value={description}
                   onChange={(event) => this.setState({ description: event.target.value })}
                 />
+                <hr />
               </div>
               {this.renderRadio()}
-              <div className='form-group'>
+              <div className={`form-group ${styles.goalYears}`}>
                 <label htmlFor='placeholder'>
                   <h5>Goal Years</h5>
-                  <table className='table table-bordered'>
+                  <table className={`table table-bordered ${styles.yearsTable}`}>
                     <thead>
                       <tr>
                         <th scope='col'>Year</th>
@@ -228,7 +237,6 @@ class GoalModal extends Component {
                         <td>
                           <button
                             className='btn btn-sm btn-link'
-                            style={{ padding: '0px' }}
                             onClick={() => this.removeYear(y)}
                           >
                             Delete
