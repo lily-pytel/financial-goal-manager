@@ -134,12 +134,15 @@ class GoalDetailsPage extends Component {
         return goalEntry.year === progressYear
       })
 
-    const goalAmount = goalYear ? goalYear.value : ''
+    const goalAmount = goalYear
+      ? goalYear.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      : ''
+    const formattedValue = row.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 
     return (
       <tr key={row.date}>
         <td>{date.format('L')}</td>
-        <td>{row.value}</td>
+        <td>{formattedValue}</td>
         <td>{progressYear}</td>
         <td>{goalAmount}</td>
         <td>
