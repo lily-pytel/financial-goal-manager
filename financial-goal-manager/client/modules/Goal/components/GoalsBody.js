@@ -37,11 +37,11 @@ class GoalsBody extends Component {
                   yearGoal[0].value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 
                 return [
-                  <td key={`inner${year}goal`} className={styles.goalsProgress}>{goalAmount}</td>,
-                  <td key={`inner${year}progress`}>{lastProgress !== 0 ? lastProgress : ''}</td>
+                  <td key={`inner${year}goal`}>{goalAmount}</td>,
+                  <td className={styles.noBorder} key={`inner${year}progress`}>{lastProgress !== 0 ? lastProgress : ''}</td>
                 ]
               })}
-              <td>
+              <td className={styles.goalsProgress}>
                 <button title='Edit' className='btn btn-link' onClick={() => dispatch(openGoalModal(goal))}>
                   <FaPen />
                 </button>

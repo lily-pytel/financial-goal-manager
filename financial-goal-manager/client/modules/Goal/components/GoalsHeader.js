@@ -6,22 +6,30 @@ function GoalsHeader (props) {
   const { years } = props
 
   const headerYear = years.map(year => {
-    return <th style={{ textAlign: 'center' }} colSpan={2} key={year}>{year}</th>
+    return (
+      <th
+        className={styles.noBorder}
+        style={{ textAlign: 'center' }}
+        colSpan={2}
+        key={year}
+      >
+        {year}
+      </th>
+    )
   })
   const headerYearSecondary = years.map(year => {
     return [
-      <th scope='col' className={styles.goalsProgress} key={`yeargoal${year.year}`}>Goal</th>,
-      <th scope='col' key={`yearprogress${year.year}`}>Progress</th>
+      <th scope='col' key={`yeargoal${year.year}`}>Goal</th>,
+      <th scope='col' key={`yearprogress${year.year}`} className={styles.noBorder}>Progress</th>
     ]
   })
 
   return (
     <thead>
       <tr>
-        <th />
-        <th />
+        <th className={styles.noBorder} colSpan={2} />
         {headerYear}
-        <th />
+        <th className={styles.noBorder} />
       </tr>
       <tr>
         <th scope='col' style={{ textAlign: 'left' }}>Name</th>

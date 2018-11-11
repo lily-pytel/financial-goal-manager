@@ -1,0 +1,21 @@
+.goalsTable td, .goalsTable th {
+  padding: 5px 5px 5px 10px;
+  border-left: 1px solid #dee2e6;
+}
+
+.goalsTable tfoot th {
+  border-left: none !important;
+}
+
+.noBorder {
+  border-left: none !important;
+  border-top: none !important;
+}
+
+.textCell {
+  text-align: left;
+}
+
+.goalsTable td button {
+  padding: 0px 5px 0px 5px;
+}
