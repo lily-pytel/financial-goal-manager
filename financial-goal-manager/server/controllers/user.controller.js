@@ -23,16 +23,13 @@ export function getUsers (req, res) {
  * @returns void
  */
 export function updateUser (req, res) {
-  console.log('1')
   User.remove({}, err => {
     if (err) {
-      console.log(err)
       res.status(500).send(err)
       return
     }
 
     const newUser = new User(req.body.user)
-    console.log(req.body)
     newUser.cuid = cuid()
     newUser.save((err, saved) => {
       if (err) {

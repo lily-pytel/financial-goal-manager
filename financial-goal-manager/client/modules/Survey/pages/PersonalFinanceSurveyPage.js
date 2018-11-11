@@ -209,7 +209,7 @@ class PersonalFinanceSurveyPage extends Component {
                 <b>Do you contribute to your retirement plan? If so, with how much?</b><br />
                 {this.renderRadioQuestion('retirementContribution', [
                   { value: 'max', label: 'Maximum allowed by law ($18.5k a year for 401(k) and 5.5k for IRA)' },
-                  { value: 'full', label: 'More than 20% of my salary' },
+                  { value: 'full', label: 'More than 20% of my salary, but less than the maximum allowed by law' },
                   { value: 'partial', label: 'Between 10% and 20% of my salary' },
                   { value: 'perliminary', label: 'Under 10% of my salary' },
                   { value: 'none', label: 'I do not contribute' }
@@ -253,7 +253,14 @@ class PersonalFinanceSurveyPage extends Component {
 
         <div className='row'>
           <div className='col'>
-            <button className='btn btn-primary' onClick={() => { dispatch(addUserRequest(this.state)) }}>Save</button>
+            <button
+              className='btn btn-primary'
+              onClick={() => {
+                dispatch(addUserRequest(this.state))
+              }}
+            >
+              Save
+            </button>
             <button
               className='btn btn-secondary'
               onClick={() => { dispatch(addUserRequest({})) }}

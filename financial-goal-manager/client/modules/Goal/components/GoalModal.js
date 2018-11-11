@@ -4,37 +4,99 @@ import { connect } from 'react-redux'
 import Select from 'react-select'
 import styles from './GoalModal.css'
 
+import { getUser } from '../../Survey/UsersReducer'
+import { addUserRequest } from '../../Survey/UsersActions'
 import { addGoalRequest, closeGoalModal } from '../GoalsActions'
 
 const dropdownOptions = [
-  { value: 'emergency', label: 'Save for emergency' },
-  { value: 'salary', label: 'Save part of salary' },
-  { value: 'salary', label: 'Save part of bonus' },
-  { value: 'retirement-401k', label: 'Retirement: Contribute to 401(k)' },
-  { value: 'retirement-IRA', label: 'Retirement: Contribute to IRA' },
-  { value: 'cc', label: 'Debt: Pay Off Credit Card' },
-  { value: 'car-expensive', label: 'Debt: Pay Off Car (High Interest Loan)' },
-  { value: 'car-cheap', label: 'Debt: Pay Off Car (Low Interest Loan)' },
-  { value: 'house', label: 'Debt: Pay Off Mortgage' },
-  { value: 'student', label: 'Debt: Pay Off Student Loans' },
-  { value: 'loan', label: 'Debt: Pay Off Loan' },
-  { value: 'other', label: 'Other' }
+  {
+    value: 'emergency',
+    label: 'Save for emergency',
+    userSurveyArea: 'emergencySavings',
+    userSurveyValue: 'partial'
+  }, {
+    value: 'salary',
+    label: 'Save part of salary',
+    userSurveyArea: 'investment',
+    userSurveyValue: 'cash'
+  }, {
+    value: 'bonus',
+    label: 'Save part of bonus',
+    userSurveyArea: 'investment',
+    userSurveyValue: 'cash'
+  }, {
+    value: 'retirement-401k',
+    label: 'Retirement: Contribute to 401(k)',
+    userSurveyArea: 'retirementContribution'
+  }, {
+    value: 'retirement-IRA',
+    label: 'Retirement: Contribute to IRA',
+    userSurveyArea: 'retirementContribution'
+  }, {
+    value: 'cc',
+    label: 'Debt: Pay Off Credit Card',
+    userSurveyArea: 'debt'
+  }, {
+    value: 'car-expensive',
+    label: 'Debt: Pay Off Car (High Interest Loan)',
+    userSurveyArea: 'debt'
+  }, {
+    value: 'car-cheap',
+    label: 'Debt: Pay Off Car (Low Interest Loan)',
+    userSurveyArea: 'debt'
+  }, {
+    value: 'house',
+    label: 'Debt: Pay Off Mortgage',
+    userSurveyArea: 'debt'
+  }, {
+    value: 'student',
+    label: 'Debt: Pay Off Student Loans',
+    userSurveyArea: 'debt'
+  }, {
+    value: 'loan',
+    label: 'Debt: Pay Off Loan',
+    userSurveyArea: 'debt'
+  }, {
+    value: 'other',
+    label: 'Other',
+    userSurveyArea: 'debt' }
 ]
 
 class GoalModal extends Component {
   constructor (props) {
     super(props)
+    this.state = this.resetState(props)
+  }
 
+  componentWillMount () {
+    this.renderGoalName = this.renderGoalName.bind(this)
+    this.renderRadio = this.renderRadio.bind(this)
+    this.enterYearAmount = this.enterYearAmount.bind(this)
+    this.addYear = this.addYear.bind(this)
+    this.removeYear = this.removeYear.bind(this)
+    this.saveGoal = this.saveGoal.bind(this)
+    this.resetState = this.resetState.bind(this)
+  }
+
+  componentDidUpdate (prevProps, prevState) {
     const { goalToEdit } = this.props
+
+    if (goalToEdit && goalToEdit !== prevProps.goalToEdit) {
+      this.loadExistingGoal(this.goalToEdit)
+    }
+  }
+
+  resetState (props, resetAll) {
+    const { goalToEdit } = props
     const currentYear = new Date().getFullYear()
     const selectedOption = goalToEdit && dropdownOptions.find(o => o.label === goalToEdit.name)
 
-    this.state = {
+    return {
       customGoal: false,
-      selectedOption: selectedOption,
+      selectedOption: resetAll ? null : selectedOption,
       selectedType: null,
-      description: goalToEdit && goalToEdit.description,
-      updateSurvey: true,
+      description: resetAll ? '' : (goalToEdit && goalToEdit.description) || '',
+      updateSurvey: false,
       years: [{
         year: currentYear,
         value: ''
@@ -48,26 +110,9 @@ class GoalModal extends Component {
     }
   }
 
-  componentWillMount () {
-    this.renderGoalName = this.renderGoalName.bind(this)
-    this.renderRadio = this.renderRadio.bind(this)
-    this.enterYearAmount = this.enterYearAmount.bind(this)
-    this.addYear = this.addYear.bind(this)
-    this.removeYear = this.removeYear.bind(this)
-    this.saveGoal = this.saveGoal.bind(this)
-  }
-
-  componentDidUpdate (prevProps, prevState) {
-    const { goalToEdit } = this.props
-
-    if (goalToEdit && goalToEdit !== prevProps.goalToEdit) {
-      this.loadExistingGoal()
-    }
-  }
-
   loadExistingGoal () {
     const { goalToEdit } = this.props
-    const selectedOption = goalToEdit && dropdownOptions.find(o => o.label === goalToEdit.name)
+    const selectedOption = goalToEdit && dropdownOptions.find(o => o.value === goalToEdit.type)
     const sortedYears = goalToEdit.years
       .filter(y => y && y[0])
       .map(y => y[0])
@@ -94,8 +139,8 @@ class GoalModal extends Component {
   }
 
   saveGoal () {
-    const { selectedOption, years, description } = this.state
-    const { dispatch, goalToEdit } = this.props
+    const { selectedOption, years, description, updateSurvey } = this.state
+    const { dispatch, goalToEdit, user } = this.props
     const goal = {
       _id: goalToEdit && goalToEdit._id,
       name: selectedOption.label,
@@ -106,8 +151,24 @@ class GoalModal extends Component {
         .map(y => ({ year: y.year, value: parseInt(y.value, 10) }))
     }
 
+    if (updateSurvey) {
+      const userSuveyUpdate = selectedOption.userSurveyArea === 'debt'
+        ? user && user.debt
+          ? [...user.debt, selectedOption.value]
+          : [selectedOption.value]
+        : selectedOption.userSurveyValue
+
+      dispatch(addUserRequest({
+        ...user,
+        [selectedOption.userSurveyArea]: userSuveyUpdate
+      }))
+    }
+
     dispatch(addGoalRequest(goal))
     dispatch(closeGoalModal())
+
+    const newState = this.resetState(this.props, true)
+    this.setState(newState)
   }
 
   enterYearAmount (event, item) {
@@ -203,7 +264,11 @@ class GoalModal extends Component {
           <div className='modal-content'>
             <div className='modal-header'>
               <h4 className='modal-title'>Create a Goal</h4>
-              <button type='button' className='close' aria-label='Close' onClick={() => dispatch(closeGoalModal())}>
+              <button type='button' className='close' aria-label='Close' onClick={() => {
+                dispatch(closeGoalModal())
+                const newState = this.resetState(this.props, true)
+                this.setState(newState)
+              }}>
                 <span aria-hidden='true'>&times;</span>
               </button>
             </div>
@@ -270,11 +335,17 @@ class GoalModal extends Component {
                 type='button'
                 className='btn btn-sm btn-primary'
                 onClick={this.saveGoal}
-                disabled={!selectedOption || !years || !years.length}
+                disabled={!selectedOption || !years || !years.filter(y => y.value).length}
               >
                 Submit
               </button>
-              <button type='button' className='btn btn-sm btn-secondary' onClick={() => dispatch(closeGoalModal())}>Close</button>
+              <button type='button' className='btn btn-sm btn-secondary' onClick={() => {
+                dispatch(closeGoalModal())
+                const newState = this.resetState(this.props, true)
+                this.setState(newState)
+              }}>
+                Close
+              </button>
             </div>
           </div>
         </div>
@@ -291,7 +362,8 @@ GoalModal.propTypes = {
 function mapStateToProps (state) {
   return {
     goalModalOpen: state.goals.goalModalOpen,
-    goalToEdit: state.goals.goalToEdit
+    goalToEdit: state.goals.goalToEdit,
+    user: getUser(state)
   }
 }
 

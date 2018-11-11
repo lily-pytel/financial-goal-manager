@@ -10,7 +10,7 @@ export default function () {
     const goals = [
       {
         key: cuid(),
-        name: 'Contribute to an IRA',
+        name: 'Retirement: Contribute to IRA',
         type: 'retirement-IRA',
         complete: true,
         description: 'Reach the maximum contribution',
@@ -27,7 +27,7 @@ export default function () {
       },
       {
         key: cuid(),
-        name: 'Build emergency savings',
+        name: 'Save for emergency',
         type: 'emergency',
         complete: false,
         description: 'Build 3 months of expenses',
@@ -45,7 +45,7 @@ export default function () {
       {
         key: cuid(),
         name: 'Save part of salary',
-        type: 'wealth',
+        type: 'salary',
         complete: false,
         description: 'Save 10% of salary',
         years: [
@@ -62,7 +62,7 @@ export default function () {
       {
         key: cuid(),
         name: 'Save part of bonus',
-        type: 'wealth',
+        type: 'bonus',
         complete: false,
         description: 'Reach the maximum contribution',
         years: [
