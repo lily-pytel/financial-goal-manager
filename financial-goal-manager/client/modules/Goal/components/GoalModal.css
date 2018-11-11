@@ -1,13 +1,13 @@
 .yearsTable th {
-  padding: 5px;
+  padding: 5px !important;
 }
 
 .yearsTable td {
-  padding: 5px;
+  padding: 5px !important;
 }
 
 .yearsTable td button {
-  padding: 0px;
+  padding: 0px !important;
 }
 
 .goalYears {
