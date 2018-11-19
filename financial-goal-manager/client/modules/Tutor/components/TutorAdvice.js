@@ -90,8 +90,10 @@ class TutorAdvice extends Component {
       return { currAdvice: advice[5], adviceIndex: 5 }
     }
 
-    // Other: if they have low priority debt and are not risk averse
-    if (debt && debt.length && !highInterestDebt) {
+    // Other: if they have low priority debt and are really risk averse
+    const debtIntolerant = user.debtTolerance &&
+      user.debtTolerance === 'none' || user.debtTolerance === 'cautious'
+    if (debt && debt.length && !highInterestDebt && debtIntolerant) {
       return { currAdvice: advice[4], adviceIndex: 4 }
     }
 

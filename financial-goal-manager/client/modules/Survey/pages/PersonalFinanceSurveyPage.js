@@ -144,7 +144,7 @@ class PersonalFinanceSurveyPage extends Component {
                 {this.renderRadioQuestion('debtTolerance', [
                   { value: 'none', label: 'I hate debt and strive to be debt-free at all costs' },
                   { value: 'cautious', label: 'It makes me uncomfortable but it\'s inevitable' },
-                  { value: 'normal', label: 'I am comfortable with having a small amount of dect' },
+                  { value: 'normal', label: 'I am comfortable with having a small amount of debt' },
                   { value: 'adventurous', label: 'I am comfortable with debt' }
                 ])}
               </label>
