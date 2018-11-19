@@ -179,8 +179,10 @@ class PersonalFinanceSurveyPage extends Component {
                   { value: 'car-cheap', label: 'Car Loan with interest rate lower than 3%' },
                   { value: 'house', label: 'Mortgage' },
                   { value: 'cc', label: 'Credit Card' },
-                  { value: 'loan', label: 'Loan (Personal, from Family, etc.)' },
-                  { value: 'other', label: 'Other' },
+                  { value: 'loan-expensive', label: 'High interest loan (Personal, from Family, etc.)' },
+                  { value: 'loan-cheap', label: 'Low interest load (Personal, from Family, etc.)' },
+                  { value: 'other-expensive', label: 'Other High interest debt' },
+                  { value: 'other-cheap', label: 'Other low interest debt' },
                   { value: 'none', label: 'None' }
                 ])}
               </label>
@@ -255,9 +257,7 @@ class PersonalFinanceSurveyPage extends Component {
           <div className='col'>
             <button
               className='btn btn-primary'
-              onClick={() => {
-                dispatch(addUserRequest(this.state))
-              }}
+              onClick={() => { dispatch(addUserRequest(this.state)) }}
             >
               Save
             </button>
@@ -274,7 +274,7 @@ class PersonalFinanceSurveyPage extends Component {
         {userSaved && <div className='row' style={{ marginTop: '10px' }}>
           <div className='col'>
             <div className='alert alert-success alert-dismissible fade show' role='alert'>
-              User saved successfully
+              User saved successfully. If you reset, please refresh the page.
               <button
                 type='button'
                 className='close'

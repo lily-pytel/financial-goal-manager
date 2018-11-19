@@ -3,7 +3,7 @@ import React from 'react'
 const advice = [
   {
     key: 'noEmergencySavings',
-    title: 'Emergency Savings',
+    title: 'No Emergency Savings',
     paragraphs: [
       (<p key={'p1'}>
         Our information indicates that you have not yet set aside some savings for <strong>emergency expenses</strong>,
@@ -30,7 +30,7 @@ const advice = [
     }]
   }, {
     key: 'lowEmergencySavings',
-    title: 'Emergency Savings',
+    title: 'Low Emergency Savings',
     paragraphs: [
       (<p key={'p1'}>
         Our information indicates that while you have set aside some savings for <strong>emergency expenses</strong>,
@@ -60,7 +60,8 @@ const advice = [
     lastAdvice: true,
     paragraphs: [
       (<p key={'p1'}>
-        Based on our information, you hold a lot of savings in <strong>cash</strong>.
+        Based on our information, you hold a lot of savings in <strong>cash</strong>,
+        or you have no high interest debt and you save for retirement.
       </p>),
       (<p key={'p2'}>
         Unlike our other pieces of advice, this one should be taken with a grain of salt and depends on factors
@@ -160,7 +161,7 @@ const advice = [
     title: 'Low Interest Debt',
     paragraphs: [
       (<p key={'p1'}>
-        Our information indicates that you have some <strong>loo interest debt</strong>,
+        Our information indicates that you have some <strong>low interest debt</strong>,
         such as a car payment or mortage with less than 5% interest.
       </p>),
       (<p key={'p2'}>
@@ -264,6 +265,38 @@ const advice = [
     }, {
       link: 'http://www.401khelpcenter.com/401k_education/10_reasons_to_join_your_401k.html#.W9-FA2hKiUk',
       label: 'Top 10 Reasons to Join Your 401k Plan'
+    }]
+  }, {
+    key: 'noRetirementSavings',
+    title: 'Saving for Retirement',
+    paragraphs: [
+      (<p key={'p1'}>
+        Our information indicates that you have <strong>no retirement savings</strong>.
+      </p>),
+      (<p key={'p2'}>
+        Social Security was never meant to be anyone's sole source of retirement income.
+        a 30-year-old making $50,000 per year today—and who might realistically expect
+        to make substantially more by the time he or she retires—can expect less than
+        $22,000 per year from Social Security at age 67 (in today's dollars).
+      </p>),
+      (<p key={'p3'}>
+        If you can contribute to an employer plan, it has the benefit that it could be done automatically
+        and is tax-free. If your employer does not offer a plan, you can still save for retirement by
+        contributing to an IRA. The IRA has the benefit of being entirely in your control.
+      </p>)
+    ],
+    usefulLinks: [{
+      link: 'https://investor.vanguard.com/retirement/savings/why-save',
+      label: 'Why save for retirement?'
+    }, {
+      link: 'Here\'s Why You Need To Save For Retirement, And It\'s Not Pretty',
+      label: 'https://www.forbes.com/sites/lawrencelight/2017/12/15/heres-why-you-need-to-save-for-retirement-and-its-not-pretty/#343c60aa4779?'
+    }, {
+      link: 'https://www.investopedia.com/articles/retirement/07/noexcuses.asp',
+      label: 'Top 4 Reasons To Save For Retirement Now'
+    }, {
+      link: 'https://www.nerdwallet.com/article/ira-vs-401k-retirement-accounts',
+      label: 'IRA vs. 401(k): How to Choose'
     }]
   }]
 

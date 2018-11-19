@@ -46,7 +46,6 @@ class GoalCreatorButton extends Component {
           </div>
         </div>
         <TutorAdvice
-          adviceName={'moreWealth'}
           modalOpen={tutorModalOpen}
           onSubmit={() => {}}
           onCancel={() => this.setModalStatus('tutorModalOpen', false)}

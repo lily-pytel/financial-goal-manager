@@ -27,11 +27,13 @@ const dropdownOptions = [
   }, {
     value: 'retirement-401k',
     label: 'Retirement: Contribute to 401(k)',
-    userSurveyArea: 'retirementContribution'
+    userSurveyArea: 'retirementContribution',
+    userSurveyValue: 'perliminary'
   }, {
     value: 'retirement-IRA',
     label: 'Retirement: Contribute to IRA',
-    userSurveyArea: 'retirementContribution'
+    userSurveyArea: 'retirementContribution',
+    userSurveyValue: 'perliminary'
   }, {
     value: 'cc',
     label: 'Debt: Pay Off Credit Card',
