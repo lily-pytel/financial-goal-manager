@@ -122,6 +122,7 @@ class Goals extends Component {
               type='button'
               class={`btn ${goalType === 'savings' ? 'btn-secondary' : 'btn-light'}`}
               onClick={() => this.setState({ goalType: 'savings' })}
+              style={{ borderColor: '#545b62', width: '65px' }}
             >
               Savings
             </button>
@@ -129,6 +130,7 @@ class Goals extends Component {
               type='button'
               class={`btn ${goalType === 'debt' ? 'btn-secondary' : 'btn-light'}`}
               onClick={() => this.setState({ goalType: 'debt' })}
+              style={{ borderColor: '#545b62', width: '65px' }}
             >
               Debt
             </button>

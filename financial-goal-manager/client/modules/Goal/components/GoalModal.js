@@ -64,11 +64,11 @@ const dropdownOptions = [
     userSurveyArea: 'debt'
   }, {
     value: 'other-expensive',
-    label: 'Other Debt (High Interest',
+    label: 'Other Debt (High Interest)',
     userSurveyArea: 'debt'
   }, {
     value: 'other-cheap',
-    label: 'Other Debt (Low Interest',
+    label: 'Other Debt (Low Interest)',
     userSurveyArea: 'debt'
   }
 ]
