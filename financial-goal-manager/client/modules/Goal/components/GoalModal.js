@@ -3,75 +3,10 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Select from 'react-select'
 import styles from './GoalModal.css'
-
 import { getUser } from '../../Survey/UsersReducer'
 import { addUserRequest } from '../../Survey/UsersActions'
 import { addGoalRequest, closeGoalModal } from '../GoalsActions'
-
-const dropdownOptions = [
-  {
-    value: 'emergency',
-    label: 'Save for emergency',
-    userSurveyArea: 'emergencySavings',
-    userSurveyValue: 'partial'
-  }, {
-    value: 'salary',
-    label: 'Save part of salary',
-    userSurveyArea: 'investment',
-    userSurveyValue: 'cash'
-  }, {
-    value: 'bonus',
-    label: 'Save part of bonus',
-    userSurveyArea: 'investment',
-    userSurveyValue: 'cash'
-  }, {
-    value: 'retirement-401k',
-    label: 'Retirement: Contribute to 401(k)',
-    userSurveyArea: 'retirementContribution',
-    userSurveyValue: 'perliminary'
-  }, {
-    value: 'retirement-IRA',
-    label: 'Retirement: Contribute to IRA',
-    userSurveyArea: 'retirementContribution',
-    userSurveyValue: 'perliminary'
-  }, {
-    value: 'cc',
-    label: 'Debt: Pay Off Credit Card',
-    userSurveyArea: 'debt'
-  }, {
-    value: 'car-expensive',
-    label: 'Debt: Pay Off Car (High Interest Loan)',
-    userSurveyArea: 'debt'
-  }, {
-    value: 'car-cheap',
-    label: 'Debt: Pay Off Car (Low Interest Loan)',
-    userSurveyArea: 'debt'
-  }, {
-    value: 'house',
-    label: 'Debt: Pay Off Mortgage',
-    userSurveyArea: 'debt'
-  }, {
-    value: 'student',
-    label: 'Debt: Pay Off Student Loans',
-    userSurveyArea: 'debt'
-  }, {
-    value: 'loan-expensive',
-    label: 'Debt: Pay Off Loan (High Interest)',
-    userSurveyArea: 'debt'
-  }, {
-    value: 'loan-cheap',
-    label: 'Debt: Pay Off Loan (Low Interest)',
-    userSurveyArea: 'debt'
-  }, {
-    value: 'other-expensive',
-    label: 'Other Debt (High Interest)',
-    userSurveyArea: 'debt'
-  }, {
-    value: 'other-cheap',
-    label: 'Other Debt (Low Interest)',
-    userSurveyArea: 'debt'
-  }
-]
+import { dropdownOptions } from '../../../util/constants'
 
 class GoalModal extends Component {
   constructor (props) {
@@ -81,7 +16,6 @@ class GoalModal extends Component {
 
   componentWillMount () {
     this.renderGoalName = this.renderGoalName.bind(this)
-    this.renderRadio = this.renderRadio.bind(this)
     this.enterYearAmount = this.enterYearAmount.bind(this)
     this.addYear = this.addYear.bind(this)
     this.removeYear = this.removeYear.bind(this)
@@ -104,6 +38,7 @@ class GoalModal extends Component {
 
     return {
       customGoal: false,
+      goalName: '',
       selectedOption: resetAll ? null : selectedOption,
       selectedType: null,
       description: resetAll ? '' : (goalToEdit && goalToEdit.description) || '',
@@ -150,12 +85,12 @@ class GoalModal extends Component {
   }
 
   saveGoal () {
-    const { selectedOption, years, description, updateSurvey } = this.state
+    const { selectedOption, years, description, updateSurvey, customGoal, goalName, selectedType } = this.state
     const { dispatch, goalToEdit, user } = this.props
     const goal = {
       _id: goalToEdit && goalToEdit._id,
-      name: selectedOption.label,
-      type: selectedOption.value,
+      name: !customGoal ? selectedOption.label : goalName,
+      type: !customGoal ? selectedOption.value : selectedType,
       description,
       years: years
         .filter(y => y.year && y.value)
@@ -217,19 +152,58 @@ class GoalModal extends Component {
   }
 
   renderGoalName () {
-    const { updateSurvey } = this.state
+    const { updateSurvey, customGoal, goalName, selectedType } = this.state
+    const onChange = (event) => {
+      const value = event.target.value
+      this.setState({ selectedType: value })
+    }
+
     return (
       <div className='form-group'>
         <h6>Goal Name</h6>
-        <Select
-          placeholder='Type to search'
-          style={{ width: '100%' }}
-          value={this.state.selectedOption}
-          onChange={(selectedOption) => {
-            this.setState({ selectedOption })
-          }}
-          options={dropdownOptions}
-        />
+        <div className={`btn-group btn-group-sm ${styles.buttonGroup}`} role='group' aria-label='Goal Type'>
+          <button
+            type='button'
+            className={`btn ${!customGoal ? 'btn-secondary' : 'btn-light'} ${styles.goalTypeButton}`}
+            onClick={() => this.setState({ customGoal: false })}
+          >
+            From List
+          </button>
+          <button
+            type='button'
+            className={`btn ${customGoal ? 'btn-secondary' : 'btn-light'} ${styles.goalTypeButton}`}
+            onClick={() => this.setState({ customGoal: true })}
+          >
+            Create My Own
+          </button>
+        </div>
+        {!customGoal &&
+          <Select
+            className={styles.goalNameDropdown}
+            placeholder='Type to search'
+            value={this.state.selectedOption}
+            onChange={(selectedOption) => {
+              this.setState({ selectedOption })
+            }}
+            options={dropdownOptions}
+          />
+        }
+        {customGoal &&
+          <div>
+            <input
+              type='text'
+              placeholder='Enter goal name'
+              className='form-control form-control-sm'
+              value={goalName}
+              onChange={(event) => this.setState({ goalName: event.target.value })}
+            />
+            <div className={styles.goalType}>
+              <label><input type='radio' checked={selectedType === 'savings'} value='savings' onChange={onChange} /> Savings</label>
+              <span className={styles.spacer} />
+              <label><input type='radio' checked={selectedType === 'debt'} value='debt' onChange={onChange} /> Debt Reduction</label>
+            </div>
+          </div>
+        }
         <label style={{ marginTop: '10px' }}>
           <input type='checkbox' checked={updateSurvey} onChange={(event) => {
             this.setState({ updateSurvey: event.target.checked })
@@ -241,32 +215,25 @@ class GoalModal extends Component {
     )
   }
 
-  renderRadio () {
-    const { customGoal, selectedType } = this.state
-
-    if (!customGoal) {
-      return null
-    }
-
-    const onChange = (event) => {
-      const value = event.target.value
-      this.setState({ selectedType: value })
-    }
-
+  renderDescription () {
+    const { description } = this.state
     return (
       <div className='form-group'>
-        <label htmlFor='placeholder'>
-          <h6>Goal Type</h6>
-          <input type='radio' checked={selectedType === 'savings'} value='savings' onChange={onChange} /> Savings<br />
-          <input type='radio' checked={selectedType === 'debt'} value='debt' onChange={onChange} /> Debt Reduction<br />
-        </label>
+        <h6>Description</h6>
+        <input
+          type='text'
+          placeholder='Enter goal description'
+          className='form-control form-control-sm'
+          value={description}
+          onChange={(event) => this.setState({ description: event.target.value })}
+        />
         <hr />
       </div>
     )
   }
 
   render () {
-    const { years, selectedOption, description } = this.state
+    const { years, selectedOption, customGoal, goalName, selectedType } = this.state
     const { goalModalOpen, dispatch } = this.props
 
     return (
@@ -285,18 +252,8 @@ class GoalModal extends Component {
             </div>
             <div className='modal-body'>
               {this.renderGoalName()}
-              <div className='form-group'>
-                <h6>Description</h6>
-                <input
-                  type='text'
-                  className='form-control form-control-sm'
-                  value={description}
-                  onChange={(event) => this.setState({ description: event.target.value })}
-                />
-                <hr />
-              </div>
-              {this.renderRadio()}
-              <div className={`form-group ${styles.goalYears}`}>
+              {this.renderDescription()}
+              <div className={styles.goalYears}>
                 <label htmlFor='placeholder'>
                   <h6>Goal Years</h6>
                   <table className={`table table-bordered ${styles.yearsTable}`}>
@@ -331,22 +288,24 @@ class GoalModal extends Component {
                   </table>
                 </label>
               </div>
-              <div className='form-group'>
-                <button
-                  type='button'
-                  className='btn btn-outline-secondary btn-sm'
-                  onClick={this.addYear}
-                >
-                  Add Year
-                </button>
-              </div>
+              <button
+                type='button'
+                className='btn btn-outline-secondary btn-sm'
+                onClick={this.addYear}
+              >
+                Add Year
+              </button>
             </div>
             <div className='modal-footer'>
               <button
                 type='button'
                 className='btn btn-sm btn-primary'
                 onClick={this.saveGoal}
-                disabled={!selectedOption || !years || !years.filter(y => y.value).length}
+                disabled={(!customGoal && !selectedOption) ||
+                  (customGoal && !goalName) ||
+                  (customGoal && !selectedType) ||
+                  !years ||
+                  !years.filter(y => y.value).length}
               >
                 Submit
               </button>

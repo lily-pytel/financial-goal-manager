@@ -117,10 +117,10 @@ class Goals extends Component {
         <ReactHighcharts config={config} />
         <div>
           <label style={{ marginTop: '6px', marginRight: '10px', fontWeight: 'bold' }}>Goal Type: </label>
-          <div class='btn-group btn-group-sm' role='group' aria-label='Goal Type'>
+          <div className='btn-group btn-group-sm' role='group' aria-label='Goal Type'>
             <button
               type='button'
-              class={`btn ${goalType === 'savings' ? 'btn-secondary' : 'btn-light'}`}
+              className={`btn ${goalType === 'savings' ? 'btn-secondary' : 'btn-light'}`}
               onClick={() => this.setState({ goalType: 'savings' })}
               style={{ borderColor: '#545b62', width: '65px' }}
             >
@@ -128,7 +128,7 @@ class Goals extends Component {
             </button>
             <button
               type='button'
-              class={`btn ${goalType === 'debt' ? 'btn-secondary' : 'btn-light'}`}
+              className={`btn ${goalType === 'debt' ? 'btn-secondary' : 'btn-light'}`}
               onClick={() => this.setState({ goalType: 'debt' })}
               style={{ borderColor: '#545b62', width: '65px' }}
             >

@@ -14,3 +14,25 @@
   max-height: 210px;
   overflow: auto;
 }
+
+.buttonGroup {
+  margin-bottom: 5px;
+}
+
+.goalTypeButton {
+  border-color: #545b62;
+  width: 100px;
+  font-size: 12px !important;
+}
+
+.goalNameDropdown {
+  width: 100%;
+}
+
+.goalType {
+  margin-top: 5px;
+}
+
+.spacer {
+  margin-right: 25px;
+}
