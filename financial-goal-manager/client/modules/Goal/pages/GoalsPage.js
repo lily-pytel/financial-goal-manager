@@ -27,8 +27,8 @@ class GoalsPage extends Component {
 
     return (
       <div>
-        <Goals goals={this.props.goals} />
         <GoalCreatorButton />
+        <Goals goals={this.props.goals} />
         <GoalModal />
       </div>
     )

@@ -55,13 +55,22 @@ const dropdownOptions = [
     label: 'Debt: Pay Off Student Loans',
     userSurveyArea: 'debt'
   }, {
-    value: 'loan',
-    label: 'Debt: Pay Off Loan',
+    value: 'loan-expensive',
+    label: 'Debt: Pay Off Loan (High Interest)',
     userSurveyArea: 'debt'
   }, {
-    value: 'other',
-    label: 'Other',
-    userSurveyArea: 'debt' }
+    value: 'loan-cheap',
+    label: 'Debt: Pay Off Loan (Low Interest)',
+    userSurveyArea: 'debt'
+  }, {
+    value: 'other-expensive',
+    label: 'Other Debt (High Interest',
+    userSurveyArea: 'debt'
+  }, {
+    value: 'other-cheap',
+    label: 'Other Debt (Low Interest',
+    userSurveyArea: 'debt'
+  }
 ]
 
 class GoalModal extends Component {
