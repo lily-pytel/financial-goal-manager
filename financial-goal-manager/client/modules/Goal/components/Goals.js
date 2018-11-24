@@ -33,7 +33,8 @@ class Goals extends Component {
     super(props)
 
     this.state = {
-      goalType: 'savings'
+      goalType: 'savings',
+      filteredGoals: this.filterGoalsByType(props.goals, 'savings')
     }
   }
 
@@ -43,10 +44,7 @@ class Goals extends Component {
     this.getGoalProgress = this.getGoalProgress.bind(this)
   }
 
-  filterGoalsByType () {
-    const { goals } = this.props
-    const { goalType } = this.state
-
+  filterGoalsByType (goals, goalType) {
     if (goalType === 'debt') {
       return goals.filter(g => debt.includes(g.type))
     }
@@ -91,16 +89,16 @@ class Goals extends Component {
   }
 
   render () {
-    const { goalType } = this.state
-    const goals = this.filterGoalsByType()
-    const yearsObjects = goals.map(goal => goal.years)
+    const { goalType, filteredGoals } = this.state
+    const { goals } = this.props
+    const yearsObjects = filteredGoals.map(goal => goal.years)
     const yearsArray = [].concat.apply([], yearsObjects)
     const years = [...new Set(yearsArray.map(year => year[0].year))]
       .sort((a, b) => a - b)
     const firstYear = years && years.length && years[0]
     const lastYear = years && years.length && years[years.length - 1]
-    const goalAmounts = this.getGoalAmounts(goals, years)
-    const goalProgress = this.getGoalProgress(goals, years)
+    const goalAmounts = this.getGoalAmounts(filteredGoals, years)
+    const goalProgress = this.getGoalProgress(filteredGoals, years)
 
     config.title.text = goalType === 'debt'
       ? 'My Debt Reduction Goals'
@@ -114,14 +112,17 @@ class Goals extends Component {
 
     return (
       <div>
-        <ReactHighcharts config={config} />
+        <ReactHighcharts config={config} ref='chart' />
         <div>
           <label style={{ marginTop: '6px', marginRight: '10px', fontWeight: 'bold' }}>Goal Type: </label>
           <div className='btn-group btn-group-sm' role='group' aria-label='Goal Type'>
             <button
               type='button'
               className={`btn ${goalType === 'savings' ? 'btn-secondary' : 'btn-light'}`}
-              onClick={() => this.setState({ goalType: 'savings' })}
+              onClick={() => this.setState({
+                goalType: 'savings',
+                filteredGoals: this.filterGoalsByType(goals, 'savings')
+              })}
               style={{ borderColor: '#545b62', width: '65px' }}
             >
               Savings
@@ -129,7 +130,10 @@ class Goals extends Component {
             <button
               type='button'
               className={`btn ${goalType === 'debt' ? 'btn-secondary' : 'btn-light'}`}
-              onClick={() => this.setState({ goalType: 'debt' })}
+              onClick={() => this.setState({
+                goalType: 'debt',
+                filteredGoals: this.filterGoalsByType(goals, 'debt')
+              })}
               style={{ borderColor: '#545b62', width: '65px' }}
             >
               Debt
@@ -138,7 +142,7 @@ class Goals extends Component {
         </div>
         <table className={`table table-striped ${styles.goalsTable}`}>
           <GoalsHeader years={years} />
-          <GoalsBody years={years} goals={goals} />
+          <GoalsBody years={years} goals={filteredGoals} />
           <GoalsFooter years={years} goalAmounts={goalAmounts} goalProgress={goalProgress} />
         </table>
       </div>
