@@ -132,8 +132,15 @@ class GoalDetailsPage extends Component {
     const lastYearAmount = lastYear && lastYear.value ? lastYear.value : 0
     const lastProgress = sortedProgress && sortedProgress.length && sortedProgress[0]
     const lastProgressAmount = lastProgress && lastProgress.value ? lastProgress.value : 0
-    const completionRate = lastYearAmount ? (lastProgressAmount / lastYearAmount) * 100 : 0
-    const completionRateRound = Math.round(completionRate, 10)
+
+    let completionRateRound = 0
+    if (debt.includes(goal.type)) {
+      const completionRate = lastProgressAmount ? (lastYearAmount / lastProgressAmount) * 100 : 0
+      completionRateRound = Math.round(completionRate, 10)
+    } else {
+      const completionRate = lastYearAmount ? (lastProgressAmount / lastYearAmount) * 100 : 0
+      completionRateRound = Math.round(completionRate, 10)
+    }
 
     return completionRateRound
   }
