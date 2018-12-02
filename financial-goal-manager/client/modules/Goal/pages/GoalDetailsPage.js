@@ -5,6 +5,7 @@ import moment from 'moment'
 import ReactHighcharts from 'react-highcharts'
 import { FaTrashAlt } from 'react-icons/fa'
 import './GoalDetailsPage.css'
+import { debt } from '../../../util/constants'
 
 // Import Selectors
 import { getGoal } from '../GoalsReducer'
@@ -56,6 +57,7 @@ class GoalDetailsPage extends Component {
     this.updateChartOptions = this.updateChartOptions.bind(this)
     this.deleteProgress = this.deleteProgress.bind(this)
     this.addProgress = this.addProgress.bind(this)
+    this.getCompletionRate = this.getCompletionRate.bind(this)
   }
 
   deleteProgress (row) {
@@ -123,6 +125,19 @@ class GoalDetailsPage extends Component {
       }]
   }
 
+  getCompletionRate (sortedProgress) {
+    const { goal } = this.props
+    const years = goal.years.map(goalEntry => goalEntry[0])
+    const lastYear = years && years.length && years[years.length - 1]
+    const lastYearAmount = lastYear && lastYear.value ? lastYear.value : 0
+    const lastProgress = sortedProgress && sortedProgress.length && sortedProgress[0]
+    const lastProgressAmount = lastProgress && lastProgress.value ? lastProgress.value : 0
+    const completionRate = lastYearAmount ? (lastProgressAmount / lastYearAmount) * 100 : 0
+    const completionRateRound = Math.round(completionRate, 10)
+
+    return completionRateRound
+  }
+
   renderProgressRow (row) {
     const { goal } = this.props
     const date = moment(row.date)
@@ -169,14 +184,32 @@ class GoalDetailsPage extends Component {
     }
 
     this.updateChartOptions()
+    const aggregationType = debt.includes(goal.type) ? 'Debt' : 'Savings'
+    const sortedProgress = goal.progress
+      .filter(row => row && row[0])
+      .map(row => row[0])
+      .sort((a, b) => {
+        const dateA = new Date(a.date)
+        const dateB = new Date(b.date)
+        return dateA > dateB ? -1 : dateA < dateB ? 1 : 0
+      })
+    const completionRateRound = this.getCompletionRate(sortedProgress)
+    const goalComplete = completionRateRound >= 100
 
     return (
       <div>
         <div className='jumbotron jumbotron-fluid jumbotron-sm' style={{ padding: '1em' }}>
           <h1 className='display-4'>{goal.name}</h1>
           <p className='lead'>{goal.description}</p>
+          <p>{completionRateRound}% Complete</p>
           <hr />
-          <p>{goal.type}</p>
+          <p>
+            <span className='badge badge-secondary'>{aggregationType}</span>&nbsp;
+            {goalComplete
+              ? <span className='badge badge-success'>Complete</span>
+              : <span className='badge badge-warning'>In Progress</span>
+            }
+          </p>
         </div>
 
         <ReactHighcharts config={config} isPureConfig />
@@ -192,15 +225,7 @@ class GoalDetailsPage extends Component {
             </tr>
           </thead>
           <tbody>
-            {goal.progress
-              .filter(row => row && row[0])
-              .map(row => row[0])
-              .sort((a, b) => {
-                const dateA = new Date(a.date)
-                const dateB = new Date(b.date)
-                return dateA > dateB ? -1 : dateA < dateB ? 1 : 0
-              })
-              .map(row => this.renderProgressRow(row))}
+            {sortedProgress.map(row => this.renderProgressRow(row))}
           </tbody>
         </table>
         {progressDeleted && <div className='alert alert-success' role='alert'>
