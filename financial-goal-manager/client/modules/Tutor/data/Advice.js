@@ -289,8 +289,8 @@ const advice = [
       link: 'https://investor.vanguard.com/retirement/savings/why-save',
       label: 'Why save for retirement?'
     }, {
-      link: 'Here\'s Why You Need To Save For Retirement, And It\'s Not Pretty',
-      label: 'https://www.forbes.com/sites/lawrencelight/2017/12/15/heres-why-you-need-to-save-for-retirement-and-its-not-pretty/#343c60aa4779?'
+      link: 'https://www.forbes.com/sites/lawrencelight/2017/12/15/heres-why-you-need-to-save-for-retirement-and-its-not-pretty/#343c60aa4779?',
+      label: 'Here\'s Why You Need To Save For Retirement, And It\'s Not Pretty'
     }, {
       link: 'https://www.investopedia.com/articles/retirement/07/noexcuses.asp',
       label: 'Top 4 Reasons To Save For Retirement Now'
