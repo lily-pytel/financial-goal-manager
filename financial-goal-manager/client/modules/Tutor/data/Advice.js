@@ -165,8 +165,8 @@ const advice = [
         such as a car payment or mortage with less than 5% interest.
       </p>),
       (<p key={'p2'}>
-        Low interest debt is a unique kind of debt, because some recommend
-        <strong>not paying it down aggressively</strong> by making extra payments and focusing on investing any extra income in wealth-building avenues.
+        Low interest debt is a unique kind of debt, because some recommend <strong>not paying it down aggressively</strong>
+        by making extra payments and focusing on investing any extra income in wealth-building avenues.
         This is because the interest rate on some loans is <strong>less than the average market return</strong>, which is 7%.
         Let's look at the numbers: if you have a loan with 3% interest and you pay $100 towards it, you saved
         $3 you would have had to pay in interest. However, if you instead invested those $100 in the stock market,
@@ -191,7 +191,7 @@ const advice = [
     }]
   }, {
     key: 'refusedRetirementUnmatched401k',
-    title: 'Contributing to a Unmatched 401(k)',
+    title: 'Contributing to an Unmatched 401(k)',
     paragraphs: [
       (<p key={'p1'}>
         Our information indicates that your employer offers a <strong>401(k)</strong> without a match,
