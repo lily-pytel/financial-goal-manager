@@ -71,7 +71,7 @@ class TutorAdvice extends Component {
       return { currAdvice: advice[3], adviceIndex: 3 }
     }
 
-    // Fourth priority: retirement whatsowhat
+    // Fourth priority: retirement whatsoever
     const jobOffered = retirementJob && retirementJob !== 'none'
     const pensionOffered = retirementJob === 'pension'
     const doesNotContribute = !retirementContribution ||
@@ -86,7 +86,8 @@ class TutorAdvice extends Component {
     }
 
     // Sixth priority: unmatched retirement
-    if (!jobOffered && doesNotContribute && !pensionOffered) {
+    const matchNotOffered = retirementJob && retirementJob === '401k-no-match'
+    if (matchNotOffered && doesNotContribute) {
       return { currAdvice: advice[5], adviceIndex: 5 }
     }
 
