@@ -14,10 +14,17 @@ The tool allows user to set financial goals, enter progress for them, and get ad
 - Docker
 - docker-compose
 
-## To Run
+## To Run Locally Without Docker
 
-- To develop: `npm run start`
-- To run docker for development: `docker-compose build` followed by `docker-compose up`
-- To run docker for production: `docker-compose -f docker-compose-production.yml up --build`
+Run command `npm run start` or `npm run debug` to get Node debugging on the Chrome devtools console.
+
+## To Run in Development Mode Using Docker
+- Run `docker-compose build`
+- Followed by `docker-compose up`
+
+## To Run in Production Mode Using Docker
+- Run `docker-compose build`
+- Followed by `docker-compose -f docker-compose-production.yml up --build`
+- Followed by `docker-compose up`
 
 The project will be available in `http://localhost:8000`
