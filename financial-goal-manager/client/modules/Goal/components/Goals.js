@@ -44,6 +44,16 @@ class Goals extends Component {
     this.getGoalProgress = this.getGoalProgress.bind(this)
   }
 
+  componentWillReceiveProps (nextProps) {
+    const { goals } = this.props
+    if (nextProps.goals !== goals) {
+      var filteredGoals = this.filterGoalsByType(nextProps.goals, this.state.goalType)
+      this.setState({
+        filteredGoals
+      })
+    }
+  }
+
   filterGoalsByType (goals, goalType) {
     if (goalType === 'debt') {
       return goals.filter(g => debt.includes(g.type))
